@@ -1,0 +1,772 @@
+%PDF-1.4
+%“Œ‹ž ReportLab Generated PDF document (opensource)
+1 0 obj
+<<
+/F1 2 0 R /F2 3 0 R
+>>
+endobj
+2 0 obj
+<<
+/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+>>
+endobj
+3 0 obj
+<<
+/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
+>>
+endobj
+4 0 obj
+<<
+/Contents 15 0 R /MediaBox [ 0 0 960 540 ] /Parent 14 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
+
+>> 
+  /Type /Page
+>>
+endobj
+5 0 obj
+<<
+/Contents 16 0 R /MediaBox [ 0 0 960 540 ] /Parent 14 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
+
+>> 
+  /Type /Page
+>>
+endobj
+6 0 obj
+<<
+/Contents 17 0 R /MediaBox [ 0 0 960 540 ] /Parent 14 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
+
+>> 
+  /Type /Page
+>>
+endobj
+7 0 obj
+<<
+/Contents 18 0 R /MediaBox [ 0 0 960 540 ] /Parent 14 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
+
+>> 
+  /Type /Page
+>>
+endobj
+8 0 obj
+<<
+/Contents 19 0 R /MediaBox [ 0 0 960 540 ] /Parent 14 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 /Trans <<
+
+>> 
+  /Type /Page
+>>
+endobj
+9 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.nasa.gov/launch-services-program-rockets/)
+>> /Border [ 0 0 0 ] /Rect [ 52 134 530 158 ] /Subtype /Link /Type /Annot
+>>
+endobj
+10 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.nasa.gov/news-release/nasa-astronauts-launch-from-america-in-historic-test-flight-of-spacex-crew-dragon/)
+>> /Border [ 0 0 0 ] /Rect [ 52 105 620 132 ] /Subtype /Link /Type /Annot
+>>
+endobj
+11 0 obj
+<<
+/Annots [ 9 0 R 10 0 R ] /Contents 20 0 R /MediaBox [ 0 0 960 540 ] /Parent 14 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
+endobj
+12 0 obj
+<<
+/PageMode /UseNone /Pages 14 0 R /Type /Catalog
+>>
+endobj
+13 0 obj
+<<
+/Author (Speech Studio) /CreationDate (D:20000101000000+00'00') /Creator (anonymous) /Keywords () /ModDate (D:20000101000000+00'00') /Producer (ReportLab PDF Library - \(opensource\)) 
+  /Subject (Independent educational demo with original conceptual diagrams) /Title (SpaceX: Reuse and complete-system testing) /Trapped /False
+>>
+endobj
+14 0 obj
+<<
+/Count 6 /Kids [ 4 0 R 5 0 R 6 0 R 7 0 R 8 0 R 11 0 R ] /Type /Pages
+>>
+endobj
+15 0 obj
+<<
+/Length 2823
+>>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+.082353 .172549 .294118 rg
+n 0 0 960 540 re f*
+.572549 .839216 .945098 rg
+BT /F2 13 Tf 15.6 TL ET
+BT 1 0 0 1 52 486 Tm (SPEECH STUDIO / EDUCATIONAL DEMO) Tj T* ET
+.960784 .972549 .988235 rg
+BT /F2 36 Tf 43.2 TL ET
+BT 1 0 0 1 52 426 Tm (What does it take to use something again?) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 18 Tf 21.6 TL ET
+BT 1 0 0 1 52 390 Tm (SpaceX as a case study in reusable hardware and systems thinking) Tj T* ET
+.219608 .329412 .447059 RG
+n 52 67 m 908 67 l S
+.729412 .796078 .866667 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 52 42 Tm (Independent demo. No SpaceX or NASA affiliation. Diagrams are conceptual, not to scale.) Tj T* ET
+.572549 .839216 .945098 rg
+BT /F1 12 Tf 14.4 TL ET
+BT 1 0 0 1 868 42 Tm (01 / 06) Tj T* ET
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+62 180 m
+300 180 l
+305.528 180 310 184.472 310 190 c
+310 295 l
+310 300.528 305.528 305 300 305 c
+62 305 l
+56.472 305 52 300.528 52 295 c
+52 190 l
+52 184.472 56.472 180 62 180 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 70 271 Tm (A clear question) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 70 241 Tm (Define what the audience needs to) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 70 221.4 Tm (understand.) Tj T* ET
+.572549 .839216 .945098 RG
+2 w
+n 324 242 m 349 242 l S
+n 349 242 m 340.4748 247.2269 l S
+n 349 242 m 340.4748 236.7731 l S
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+375 180 m
+613 180 l
+618.528 180 623 184.472 623 190 c
+623 295 l
+623 300.528 618.528 305 613 305 c
+375 305 l
+369.472 305 365 300.528 365 295 c
+365 190 l
+365 184.472 369.472 180 375 180 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 383 271 Tm (A simple model) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 383 241 Tm (Show the parts and how they) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 383 221.4 Tm (relate.) Tj T* ET
+.572549 .839216 .945098 RG
+2 w
+n 637 242 m 662 242 l S
+n 662 242 m 653.4748 247.2269 l S
+n 662 242 m 653.4748 236.7731 l S
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+688 180 m
+898 180 l
+903.528 180 908 184.472 908 190 c
+908 295 l
+908 300.528 903.528 305 898 305 c
+688 305 l
+682.472 305 678 300.528 678 295 c
+678 190 l
+678 184.472 682.472 180 688 180 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 696 271 Tm (Evidence) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 696 241 Tm (Separate facts from your) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 696 221.4 Tm (interpretation.) Tj T* ET
+.572549 .839216 .945098 rg
+BT /F1 22 Tf 26.4 TL ET
+BT 1 0 0 1 52 110 Tm (Start with the idea. Add detail only when it helps.) Tj T* ET
+ 
+endstream
+endobj
+16 0 obj
+<<
+/Length 2660
+>>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+.082353 .172549 .294118 rg
+n 0 0 960 540 re f*
+.572549 .839216 .945098 rg
+BT /F2 13 Tf 15.6 TL ET
+BT 1 0 0 1 52 486 Tm (SPEECH STUDIO / EDUCATIONAL DEMO) Tj T* ET
+.960784 .972549 .988235 rg
+BT /F2 36 Tf 43.2 TL ET
+BT 1 0 0 1 52 426 Tm (Two stages. Different jobs.) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 18 Tf 21.6 TL ET
+BT 1 0 0 1 52 390 Tm (Falcon 9 divides the work of a launch between two stages.) Tj T* ET
+.219608 .329412 .447059 RG
+n 52 67 m 908 67 l S
+.729412 .796078 .866667 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 52 42 Tm (Independent demo. No SpaceX or NASA affiliation. Diagrams are conceptual, not to scale.) Tj T* ET
+.572549 .839216 .945098 rg
+BT /F1 12 Tf 14.4 TL ET
+BT 1 0 0 1 868 42 Tm (02 / 06) Tj T* ET
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+62 219 m
+247 219 l
+252.528 219 257 223.472 257 229 c
+257 313 l
+257 318.528 252.528 323 247 323 c
+62 323 l
+56.472 323 52 318.528 52 313 c
+52 229 l
+52 223.472 56.472 219 62 219 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 70 289 Tm (Launch) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 70 259 Tm (Both stages begin the) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 70 239.4 Tm (mission together.) Tj T* ET
+.572549 .839216 .945098 RG
+2 w
+n 276 271 m 355 313 l S
+n 355 313 m 345.0188 313.6132 l S
+n 355 313 m 349.9261 304.3828 l S
+.572549 .839216 .945098 RG
+2 w
+n 276 271 m 355 186 l S
+n 355 186 m 353.0248 195.803 l S
+n 355 186 m 345.3676 188.6863 l S
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+390 272 m
+898 272 l
+903.528 272 908 276.472 908 282 c
+908 354 l
+908 359.528 903.528 364 898 364 c
+390 364 l
+384.472 364 380 359.528 380 354 c
+380 282 l
+380 276.472 384.472 272 390 272 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 398 330 Tm (First-stage recovery) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 398 300 Tm (Recovered hardware can be prepared for another flight.) Tj T* ET
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+390 139 m
+898 139 l
+903.528 139 908 143.472 908 149 c
+908 221 l
+908 226.528 903.528 231 898 231 c
+390 231 l
+384.472 231 380 226.528 380 221 c
+380 149 l
+380 143.472 384.472 139 390 139 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 398 197 Tm (Second stage continues) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 398 167 Tm (The payload continues toward its required orbit.) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 16 Tf 19.2 TL ET
+BT 1 0 0 1 52 94 Tm (Recovery is mission-dependent and is not guaranteed.) Tj T* ET
+ 
+endstream
+endobj
+17 0 obj
+<<
+/Length 2783
+>>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+.082353 .172549 .294118 rg
+n 0 0 960 540 re f*
+.572549 .839216 .945098 rg
+BT /F2 13 Tf 15.6 TL ET
+BT 1 0 0 1 52 486 Tm (SPEECH STUDIO / EDUCATIONAL DEMO) Tj T* ET
+.960784 .972549 .988235 rg
+BT /F2 36 Tf 43.2 TL ET
+BT 1 0 0 1 52 426 Tm (Recovery is part of a larger cycle.) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 18 Tf 21.6 TL ET
+BT 1 0 0 1 52 390 Tm (A conceptual model of reuse, not an internal company checklist.) Tj T* ET
+.219608 .329412 .447059 RG
+n 52 67 m 908 67 l S
+.729412 .796078 .866667 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 52 42 Tm (Independent demo. No SpaceX or NASA affiliation. Diagrams are conceptual, not to scale.) Tj T* ET
+.572549 .839216 .945098 rg
+BT /F1 12 Tf 14.4 TL ET
+BT 1 0 0 1 868 42 Tm (03 / 06) Tj T* ET
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+130 263 m
+395 263 l
+400.528 263 405 267.472 405 273 c
+405 341 l
+405 346.528 400.528 351 395 351 c
+130 351 l
+124.472 351 120 346.528 120 341 c
+120 273 l
+120 267.472 124.472 263 130 263 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 138 317 Tm (1. Fly) Tj T* ET
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+560 263 m
+825 263 l
+830.528 263 835 267.472 835 273 c
+835 341 l
+835 346.528 830.528 351 825 351 c
+560 351 l
+554.472 351 550 346.528 550 341 c
+550 273 l
+550 267.472 554.472 263 560 263 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 568 317 Tm (2. Recover) Tj T* ET
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+560 127 m
+825 127 l
+830.528 127 835 131.472 835 137 c
+835 205 l
+835 210.528 830.528 215 825 215 c
+560 215 l
+554.472 215 550 210.528 550 205 c
+550 137 l
+550 131.472 554.472 127 560 127 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 568 181 Tm (3. Inspect) Tj T* ET
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+130 127 m
+395 127 l
+400.528 127 405 131.472 405 137 c
+405 205 l
+405 210.528 400.528 215 395 215 c
+130 215 l
+124.472 215 120 210.528 120 205 c
+120 137 l
+120 131.472 124.472 127 130 127 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 138 181 Tm (4. Prepare) Tj T* ET
+.572549 .839216 .945098 RG
+2 w
+n 422 307 m 534 307 l S
+n 534 307 m 525.4748 312.2269 l S
+n 534 307 m 525.4748 301.7731 l S
+.572549 .839216 .945098 RG
+2 w
+n 692 251 m 692 230 l S
+n 692 230 m 697.2269 238.5252 l S
+n 692 230 m 686.7731 238.5252 l S
+.572549 .839216 .945098 RG
+2 w
+n 534 170 m 422 170 l S
+n 422 170 m 430.5252 164.7731 l S
+n 422 170 m 430.5252 175.2269 l S
+.572549 .839216 .945098 RG
+2 w
+n 262 230 m 262 251 l S
+n 262 251 m 256.7731 242.4748 l S
+n 262 251 m 267.2269 242.4748 l S
+.729412 .796078 .866667 rg
+BT /F1 16 Tf 19.2 TL ET
+BT 1 0 0 1 120 97 Tm (Ask what changed, what is known, and what still needs checking.) Tj T* ET
+ 
+endstream
+endobj
+18 0 obj
+<<
+/Length 3476
+>>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+.082353 .172549 .294118 rg
+n 0 0 960 540 re f*
+.572549 .839216 .945098 rg
+BT /F2 13 Tf 15.6 TL ET
+BT 1 0 0 1 52 486 Tm (SPEECH STUDIO / EDUCATIONAL DEMO) Tj T* ET
+.960784 .972549 .988235 rg
+BT /F2 36 Tf 43.2 TL ET
+BT 1 0 0 1 52 426 Tm (Demo-2: test the whole journey.) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 18 Tf 21.6 TL ET
+BT 1 0 0 1 52 390 Tm (May 30, 2020 / Robert Behnken and Douglas Hurley / Crew Dragon) Tj T* ET
+.219608 .329412 .447059 RG
+n 52 67 m 908 67 l S
+.729412 .796078 .866667 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 52 42 Tm (Independent demo. No SpaceX or NASA affiliation. Diagrams are conceptual, not to scale.) Tj T* ET
+.572549 .839216 .945098 rg
+BT /F1 12 Tf 14.4 TL ET
+BT 1 0 0 1 868 42 Tm (04 / 06) Tj T* ET
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+62 207 m
+238 207 l
+243.528 207 248 211.472 248 217 c
+248 312 l
+248 317.528 243.528 322 238 322 c
+62 322 l
+56.472 322 52 317.528 52 312 c
+52 217 l
+52 211.472 56.472 207 62 207 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 70 288 Tm (Launch) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 70 258 Tm (One part of the) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 70 238.4 Tm (end-to-end system test.) Tj T* ET
+.572549 .839216 .945098 RG
+2 w
+n 253 263 m 268 263 l S
+n 268 263 m 259.4748 268.2269 l S
+n 268 263 m 259.4748 257.7731 l S
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+282 207 m
+458 207 l
+463.528 207 468 211.472 468 217 c
+468 312 l
+468 317.528 463.528 322 458 322 c
+282 322 l
+276.472 322 272 317.528 272 312 c
+272 217 l
+272 211.472 276.472 207 282 207 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 290 288 Tm (In-orbit) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 290 258 Tm (One part of the) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 290 238.4 Tm (end-to-end system test.) Tj T* ET
+.572549 .839216 .945098 RG
+2 w
+n 473 263 m 488 263 l S
+n 488 263 m 479.4748 268.2269 l S
+n 488 263 m 479.4748 257.7731 l S
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+502 207 m
+678 207 l
+683.528 207 688 211.472 688 217 c
+688 312 l
+688 317.528 683.528 322 678 322 c
+502 322 l
+496.472 322 492 317.528 492 312 c
+492 217 l
+492 211.472 496.472 207 502 207 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 510 288 Tm (Docking) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 510 258 Tm (One part of the) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 510 238.4 Tm (end-to-end system test.) Tj T* ET
+.572549 .839216 .945098 RG
+2 w
+n 693 263 m 708 263 l S
+n 708 263 m 699.4748 268.2269 l S
+n 708 263 m 699.4748 257.7731 l S
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+722 207 m
+898 207 l
+903.528 207 908 211.472 908 217 c
+908 312 l
+908 317.528 903.528 322 898 322 c
+722 322 l
+716.472 322 712 317.528 712 312 c
+712 217 l
+712 211.472 716.472 207 722 207 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 730 288 Tm (Landing) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 730 258 Tm (One part of the) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 730 238.4 Tm (end-to-end system test.) Tj T* ET
+.572549 .839216 .945098 rg
+BT /F1 21 Tf 25.2 TL ET
+BT 1 0 0 1 52 126 Tm (NASA described Demo-2 as an end-to-end crew transportation test.) Tj T* ET
+ 
+endstream
+endobj
+19 0 obj
+<<
+/Length 1738
+>>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+.082353 .172549 .294118 rg
+n 0 0 960 540 re f*
+.572549 .839216 .945098 rg
+BT /F2 13 Tf 15.6 TL ET
+BT 1 0 0 1 52 486 Tm (SPEECH STUDIO / EDUCATIONAL DEMO) Tj T* ET
+.960784 .972549 .988235 rg
+BT /F2 36 Tf 43.2 TL ET
+BT 1 0 0 1 52 426 Tm (Explain the relationship, not every detail.) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 18 Tf 21.6 TL ET
+BT 1 0 0 1 52 390 Tm (Three presentation lessons from the case study) Tj T* ET
+.219608 .329412 .447059 RG
+n 52 67 m 908 67 l S
+.729412 .796078 .866667 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 52 42 Tm (Independent demo. No SpaceX or NASA affiliation. Diagrams are conceptual, not to scale.) Tj T* ET
+.572549 .839216 .945098 rg
+BT /F1 12 Tf 14.4 TL ET
+BT 1 0 0 1 868 42 Tm (05 / 06) Tj T* ET
+.572549 .839216 .945098 rg
+BT /F2 34 Tf 40.8 TL ET
+BT 1 0 0 1 52 289 Tm (1) Tj T* ET
+.960784 .972549 .988235 rg
+BT /F2 23 Tf 27.6 TL ET
+BT 1 0 0 1 102 296 Tm (State the question) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 17 Tf 20.4 TL ET
+BT 1 0 0 1 102 265 Tm (What does the audience need to understand?) Tj T* ET
+.572549 .839216 .945098 rg
+BT /F2 34 Tf 40.8 TL ET
+BT 1 0 0 1 52 211 Tm (2) Tj T* ET
+.960784 .972549 .988235 rg
+BT /F2 23 Tf 27.6 TL ET
+BT 1 0 0 1 102 218 Tm (Show the handoff) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 17 Tf 20.4 TL ET
+BT 1 0 0 1 102 187 Tm (How do the parts work together?) Tj T* ET
+.572549 .839216 .945098 rg
+BT /F2 34 Tf 40.8 TL ET
+BT 1 0 0 1 52 133 Tm (3) Tj T* ET
+.960784 .972549 .988235 rg
+BT /F2 23 Tf 27.6 TL ET
+BT 1 0 0 1 102 140 Tm (Separate facts and interpretation) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 17 Tf 20.4 TL ET
+BT 1 0 0 1 102 109 Tm (Which claims have evidence, and which are your teaching model?) Tj T* ET
+ 
+endstream
+endobj
+20 0 obj
+<<
+/Length 2709
+>>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+.082353 .172549 .294118 rg
+n 0 0 960 540 re f*
+.572549 .839216 .945098 rg
+BT /F2 13 Tf 15.6 TL ET
+BT 1 0 0 1 52 486 Tm (SPEECH STUDIO / EDUCATIONAL DEMO) Tj T* ET
+.960784 .972549 .988235 rg
+BT /F2 36 Tf 43.2 TL ET
+BT 1 0 0 1 52 426 Tm (Your next explanation) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 18 Tf 21.6 TL ET
+BT 1 0 0 1 52 390 Tm (Choose a system in your own work. Make its logic easier to follow.) Tj T* ET
+.219608 .329412 .447059 RG
+n 52 67 m 908 67 l S
+.729412 .796078 .866667 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 52 42 Tm (Independent demo. No SpaceX or NASA affiliation. Diagrams are conceptual, not to scale.) Tj T* ET
+.572549 .839216 .945098 rg
+BT /F1 12 Tf 14.4 TL ET
+BT 1 0 0 1 868 42 Tm (06 / 06) Tj T* ET
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+62 228 m
+300 228 l
+305.528 228 310 232.472 310 238 c
+310 334 l
+310 339.528 305.528 344 300 344 c
+62 344 l
+56.472 344 52 339.528 52 334 c
+52 238 l
+52 232.472 56.472 228 62 228 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 70 310 Tm (Parts) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 70 280 Tm (Name the pieces that matter.) Tj T* ET
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+375 228 m
+613 228 l
+618.528 228 623 232.472 623 238 c
+623 334 l
+623 339.528 618.528 344 613 344 c
+375 344 l
+369.472 344 365 339.528 365 334 c
+365 238 l
+365 232.472 369.472 228 375 228 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 383 310 Tm (Handoffs) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 383 280 Tm (Show how the work moves.) Tj T* ET
+.137255 .243137 .360784 rg
+.572549 .839216 .945098 RG
+n
+688 228 m
+898 228 l
+903.528 228 908 232.472 908 238 c
+908 334 l
+908 339.528 903.528 344 898 344 c
+688 344 l
+682.472 344 678 339.528 678 334 c
+678 238 l
+678 232.472 682.472 228 688 228 c
+h
+B*
+.960784 .972549 .988235 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 696 310 Tm (Evidence) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 696 280 Tm (Say what is known and) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 14 Tf 16.8 TL ET
+BT 1 0 0 1 696 260.4 Tm (assumed.) Tj T* ET
+.572549 .839216 .945098 rg
+BT /F2 16 Tf 19.2 TL ET
+BT 1 0 0 1 52 170 Tm (Primary sources) Tj T* ET
+.960784 .972549 .988235 rg
+BT /F1 17 Tf 20.4 TL ET
+BT 1 0 0 1 52 142 Tm (NASA: Launch Services Program rockets \(Falcon 9\)) Tj T* ET
+.960784 .972549 .988235 rg
+BT /F1 17 Tf 20.4 TL ET
+BT 1 0 0 1 52 114 Tm (NASA: Demo-2 launch release, May 30, 2020) Tj T* ET
+.729412 .796078 .866667 rg
+BT /F1 13 Tf 15.6 TL ET
+BT 1 0 0 1 52 87 Tm (Full source links and accessible slide descriptions: demo/sources.html) Tj T* ET
+ 
+endstream
+endobj
+xref
+0 21
+0000000000 65535 f 
+0000000061 00000 n 
+0000000102 00000 n 
+0000000209 00000 n 
+0000000321 00000 n 
+0000000516 00000 n 
+0000000711 00000 n 
+0000000906 00000 n 
+0000001101 00000 n 
+0000001296 00000 n 
+0000001480 00000 n 
+0000001728 00000 n 
+0000001949 00000 n 
+0000002019 00000 n 
+0000002369 00000 n 
+0000002460 00000 n 
+0000005335 00000 n 
+0000008047 00000 n 
+0000010882 00000 n 
+0000014410 00000 n 
+0000016200 00000 n 
+trailer
+<<
+/ID 
+[<6094f74fc44496907d325642d458bb67><6094f74fc44496907d325642d458bb67>]
+% ReportLab generated PDF document -- digest (opensource)
+
+/Info 13 0 R
+/Root 12 0 R
+/Size 21
+>>
+startxref
+18961
+%%EOF

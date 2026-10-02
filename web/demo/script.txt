@@ -1,0 +1,95 @@
+A different way to think about flight
+
+0:00 to 1:30
+
+Imagine buying a bicycle, riding it once, and throwing it away. That is an expensive way to travel. Reuse changes the question: how do we build something that can do useful work again?
+
+[Pause. Let the audience picture it.]
+
+SpaceX offers a useful case study for thinking about this question in spaceflight. This talk focuses on two ideas: reusable hardware and testing a complete system. It is an educational example, not a company presentation.
+
+The bicycle comparison has limits. Rockets face different temperatures, speeds and loads. A recovered component still has to be inspected and prepared for another flight. The point is to make the design question clear, not to pretend the engineering is simple.
+
+As we go, keep one question in mind: what has to be true before we can confidently use something again?
+
+Two stages, different jobs
+
+1:30 to 3:00
+
+Falcon 9 is a two-stage launch vehicle built by SpaceX. Its first stage can be recovered and flown again. The second stage continues the flight toward the required orbit.
+
+[Point to the two branches on the slide.]
+
+Think of the stages as handing off a job. Both contribute to the mission, but after separation their paths differ. One branch illustrates recovery of the first stage. The other illustrates the second stage continuing with the payload.
+
+Our diagram is deliberately simple. It is not a flight plan, and it is not drawn to scale. Different missions have different requirements, and recovery is not guaranteed.
+
+When we explain a complex system, a useful diagram should reveal one relationship at a time. Here, that relationship is the division of work. Once that is clear, we can ask what makes the recovery branch possible.
+
+Recovery is only part of reuse
+
+3:00 to 5:00
+
+A landing is an observable event. Reuse is a larger process. For our conceptual model, picture four steps: fly, recover, inspect and prepare. Then the cycle can begin again.
+
+[Trace the cycle slowly.]
+
+This is a teaching model, not a description of an internal SpaceX checklist. It helps distinguish bringing hardware back from deciding it is ready for further use.
+
+For any reusable system, there are practical questions. What did the last use change? What evidence is available? What needs maintenance? What are the limits? These questions apply to many kinds of equipment, even though the answers differ.
+
+We should also separate an engineering goal from a proven result. A design can aim for reuse, while a particular mission can still encounter a problem. Clear explanations make room for that uncertainty.
+
+That distinction matters when communicating technical progress. A dramatic moment may catch our attention, but a repeatable process gives the moment its meaning.
+
+Demo-2: a complete-system test
+
+5:00 to 7:00
+
+On May 30, 2020, NASA astronauts Robert Behnken and Douglas Hurley launched aboard Crew Dragon on a Falcon 9. The mission was called Demo-2.
+
+NASA described it as an end-to-end test of the crew transportation system, including launch, in-orbit, docking and landing operations.
+
+[Pause before the next idea.]
+
+The phrase end-to-end is useful. A successful component is only one part of a successful journey. People, hardware, software and operations have to work together across the whole sequence.
+
+Our slide shows four labeled steps rather than a photograph. That keeps attention on the test scope. It also reminds us that a single launch image cannot show everything a mission needs to demonstrate.
+
+For this rehearsal, we are using a historical event with a fixed date. We are not making claims about current launch totals, future schedules or the status of vehicles still in development.
+
+What a clear explanation does
+
+7:00 to 8:30
+
+We can take three communication lessons from this example.
+
+First, state the question before introducing the details. Reuse is easier to understand when we ask what it takes to use hardware again.
+
+Second, show how the parts relate. A two-stage diagram helps the audience follow the handoff without memorizing every specification.
+
+Third, distinguish observations from interpretations. The date and purpose of Demo-2 are historical facts. The way we turn them into presentation lessons is our interpretation.
+
+[Look up from the script.]
+
+This is where rehearsal helps. If a sentence needs too many caveats, simplify it. If a diagram adds a new idea faster than you can explain it, slow down. Leave space for a listener to connect the pieces.
+
+Accuracy and clarity can support each other. A modest claim, explained well, is often more useful than a sweeping claim delivered with confidence.
+
+Bring the idea back to your audience
+
+8:30 to 10:00
+
+We began with a question about using something again. We used Falcon 9 to illustrate different jobs in a system, and Demo-2 to illustrate testing across a whole journey.
+
+The next step is a question for the audience: what system in your own work would benefit from a clearer explanation of its parts, its handoffs and its evidence?
+
+[Give the audience a moment.]
+
+You do not need a rocket to practice that kind of thinking. Choose one process. Sketch its main steps. Identify what is known, what is assumed and what still needs to be tested.
+
+Then explain it aloud to someone who has not seen it before. Notice where they hesitate. That is useful feedback, not a reason to add more jargon.
+
+A good presentation makes a complex idea easier to follow while respecting the complexity behind it. That is the skill we are practicing today.
+
+Thank you.

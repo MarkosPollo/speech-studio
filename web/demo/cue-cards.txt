@@ -1,0 +1,35 @@
+A different way to think about flight (0:00)
+Reuse changes the design question.
+Bicycle analogy has limits.
+Educational example; independent of SpaceX.
+Ask: what makes something ready to use again?
+
+Two stages, different jobs (1:30)
+Falcon 9: two stages.
+First stage: recovery and reuse.
+Second stage: continues toward orbit.
+Conceptual diagram; recovery is not guaranteed.
+
+Recovery is only part of reuse (3:00)
+Fly → recover → inspect → prepare.
+Teaching model, not an internal checklist.
+Separate a goal from a demonstrated result.
+Explain uncertainty plainly.
+
+Demo-2: a complete-system test (5:00)
+May 30, 2020: Demo-2 launched.
+Robert Behnken and Douglas Hurley.
+End-to-end crew transportation test.
+Launch, in-orbit, docking and landing operations.
+
+What a clear explanation does (7:00)
+State the question.
+Show relationships.
+Separate facts from your interpretation.
+Pause; let listeners connect the pieces.
+
+Bring the idea back to your audience (8:30)
+Parts, handoffs and evidence.
+Ask the audience about a system in their work.
+Sketch it, explain it, listen for hesitation.
+Thank you.
