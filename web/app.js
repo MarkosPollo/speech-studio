@@ -7,6 +7,7 @@
  try { saved = JSON.parse(localStorage.getItem(storageKey) || '{}'); } catch { saved = {}; }
  let script = typeof saved.script === 'string' ? saved.script : C.script;
  let cards = C.cards.map((c,i) => ({...c, body: typeof saved.cards?.[i] === 'string' ? saved.cards[i] : c.body}));
+ let targetSeconds = Number.isFinite(saved.targetSeconds) ? Math.max(10,Math.min(7200,saved.targetSeconds)) : 600, takeTargetSeconds = targetSeconds, practiceTarget = null;
  let mode = 'script', cardIndex = 0, editing = false;
  let fontSize = Number.isFinite(saved.fontSize) ? Math.max(20,Math.min(44,saved.fontSize)) : 27;
  let speed = Number.isFinite(saved.speed) ? Math.max(8,Math.min(80,saved.speed)) : 24;
@@ -23,7 +24,7 @@
  const toast = message => { clearTimeout(toastId); setText('toast',message); $('toast').hidden=false; toastId=setTimeout(()=>$('toast').hidden=true,4500); };
  const announce = message => setText('announcement',message);
  function save() {
-  try { localStorage.setItem(storageKey,JSON.stringify({script,cards:cards.map(c=>c.body),fontSize,speed})); setText('saveStatus','Saved in this browser'); }
+  try { localStorage.setItem(storageKey,JSON.stringify({script,cards:cards.map(c=>c.body),fontSize,speed,targetSeconds})); setText('saveStatus','Saved in this browser'); }
   catch { setText('saveStatus','Browser storage unavailable'); toast('Your changes work in this tab, but can’t be saved here. Download your text to keep it.'); }
  }
  function wordCount() {
@@ -65,16 +66,16 @@
  }
  function showMode(next) {
   if(editing)finishEditing();setScroll(false);mode=next;
-  $('scriptTab').classList.toggle('active',mode==='script');$('cueTab').classList.toggle('active',mode==='cue');
-  ['script','cue'].forEach(m=>{$(m+'Tab').setAttribute('aria-selected',String(mode===m));$(m+'Tab').tabIndex=mode===m?0:-1;});
-  $('scriptView').hidden=mode!=='script';$('cueView').hidden=mode!=='cue';
+  ['script','cue','learn'].forEach(m=>$(m+'Tab').classList.toggle('active',mode===m));
+  ['script','cue','learn'].forEach(m=>{$(m+'Tab').setAttribute('aria-selected',String(mode===m));$(m+'Tab').tabIndex=mode===m?0:-1;});
+  $('scriptView').hidden=mode!=='script';$('cueView').hidden=mode!=='cue';$('learnView').hidden=mode!=='learn';$('readerControls').hidden=mode==='learn';$('editButton').hidden=mode==='learn';document.dispatchEvent?.(new CustomEvent('studio:mode',{detail:mode}));
   $('scrollButton').disabled=mode!=='script';$('rewindButton').disabled=mode!=='script';$('scrollSpeed').disabled=mode!=='script';
   setText('editButton',mode==='script'?'Edit script':'Edit this card');
   setText('documentMeta',mode==='script'?'SPACE EXPLORATION · PRACTICE DEMO':'SIX CARDS · ELAPSED CHECKPOINTS');
  }
  function editText(){setScroll(false);editing=true;$('scriptView').hidden=true;$('cueView').hidden=true;$('editorView').hidden=false;$('readerControls').hidden=true;$('editButton').hidden=true;setText('editorLabel',mode==='script'?'Edit your script':`Edit card ${cardIndex+1}: ${cards[cardIndex].title}`);$('textEditor').value=mode==='script'?script:cards[cardIndex].body;$('textEditor').focus();}
  function updateEdit(){if(!editing)return;if(mode==='script')script=$('textEditor').value;else cards[cardIndex].body=$('textEditor').value;save();}
- function finishEditing(){updateEdit();editing=false;$('editorView').hidden=true;$('readerControls').hidden=false;$('editButton').hidden=false;$('scriptView').hidden=mode!=='script';$('cueView').hidden=mode!=='cue';renderScript();renderCard();}
+ function finishEditing(){updateEdit();editing=false;$('editorView').hidden=true;$('readerControls').hidden=false;$('editButton').hidden=false;$('scriptView').hidden=mode!=='script';$('cueView').hidden=mode!=='cue';$('learnView').hidden=mode!=='learn';$('readerControls').hidden=mode==='learn';$('editButton').hidden=mode==='learn';document.dispatchEvent?.(new CustomEvent('studio:mode',{detail:mode}));renderScript();renderCard();document.dispatchEvent?.(new CustomEvent('studio:script'));}
  function confirmAction(title,message,label='Continue') {
   if(pendingConfirm)return Promise.resolve(false);
   setText('confirmTitle',title);setText('confirmText',message);setText('confirmYes',label);$('confirmDialog').showModal();$('confirmCancel').focus();
@@ -104,6 +105,7 @@
   $('audioStage').hidden=selectedMedia!=='audio'||!['ready','recording','paused','playback'].includes(captureState);
   $('playbackVideo').hidden=!play||!takeBlob;
   $('cameraStage').classList.toggle('audio-playback',play&&selectedMedia==='audio');
+  $('targetMinutes').disabled=active||busy;document.dispatchEvent?.(new CustomEvent('studio:capture',{detail:{state:captureState,seconds:liveElapsed(),media:selectedMedia}}));
   if(selectedMedia==='audio'){$('audioStage').querySelector('h3').textContent=play?'Your audio take':active?'Find your voice':'Microphone ready';$('audioStage').querySelector('p').textContent=play?'Press play to listen back.':'Your script is right beside you.';}
  }
  function releaseStream(){if(stream){const old=stream;stream=null;old.getTracks().forEach(track=>{track.onended=null;track.stop();});}$('liveVideo').srcObject=null;}
@@ -128,17 +130,18 @@
    showError(errors[error.name]||'The camera or microphone couldn’t start. Check device and browser permissions, then try again.');
   } finally {setText('enableButton',selectedMedia==='audio'?'Enable microphone':selectedMedia==='video'?'Enable camera':'Enable camera & mic');updateCaptureUI();}
  }
- function updateTimer(){const current=liveElapsed();setText('elapsedTime',displayTime(current));$('timeFill').style.width=`${Math.min(current/600*100,100)}%`;$('timeTrack').setAttribute('aria-valuenow',String(Math.floor(Math.min(current,600))));$('timeTrack').setAttribute('aria-valuetext',`${displayTime(current)} elapsed of ten-minute target`);const control=$('elapsedTime').closest('.recording-controls');control.classList.toggle('warning',current>=480&&current<600);control.classList.toggle('overtime',current>=600);
-  if(current>=600)setText('timerMessage',`${displayTime(current-600)} over target · finish your thought`);else if(current>=540)setText('timerMessage',`${displayTime(600-current)} left · bring it home`);else if(current>=480)setText('timerMessage',`${displayTime(600-current)} left · make room for your close`);else if(current>0)setText('timerMessage',`${displayTime(600-current)} remaining`);else $('timerMessage').replaceChildren(document.createTextNode('Room for pauses.'),document.createElement('br'),document.createTextNode('Room to be yourself.'));
-  const warning=current>=600?10:current>=540?9:current>=480?8:0;if(warning>announcedMinute){announcedMinute=warning;announce(warning===10?'Ten minutes. You are now over the target.':`${10-warning} ${10-warning===1?'minute':'minutes'} left.`);}
+ function updateTimer(){const current=liveElapsed(),target=['recording','paused','stopping','playback'].includes(captureState)?takeTargetSeconds:targetSeconds;setText('elapsedTime',displayTime(current));setText('timerTarget',`/ ${displayTime(target)}`);$('timeFill').style.width=`${Math.min(current/target*100,100)}%`;$('timeTrack').setAttribute('aria-valuemax',String(target));$('timeTrack').setAttribute('aria-valuenow',String(Math.floor(Math.min(current,target))));$('timeTrack').setAttribute('aria-valuetext',`${displayTime(current)} elapsed of ${displayTime(target)} target`);const control=$('elapsedTime').closest('.recording-controls');control.classList.toggle('warning',current>=target*.8&&current<target);control.classList.toggle('overtime',current>=target);
+  if(current>=target)setText('timerMessage',`${displayTime(current-target)} over target · finish your thought`);else if(current>=target*.9)setText('timerMessage',`${displayTime(target-current)} left · bring it home`);else if(current>=target*.8)setText('timerMessage',`${displayTime(target-current)} left · make room for your close`);else if(current>0)setText('timerMessage',`${displayTime(target-current)} remaining`);else $('timerMessage').replaceChildren(document.createTextNode('Room for pauses.'),document.createElement('br'),document.createTextNode('Room to be yourself.'));
+  const warning=current>=target?3:current>=target*.9?2:current>=target*.8?1:0;if(warning>announcedMinute){announcedMinute=warning;announce(warning===3?'You are now over the target.':`${displayTime(target-current)} left.`);}
  }
+ function setTarget(value){if(!Number.isFinite(value)||value<10||value>7200)return false;targetSeconds=Math.round(value);$('targetMinutes').value=Number((targetSeconds/60).toFixed(4));updateTimer();return true;}
  function resetTimer(){clearInterval(timerId);elapsed=0;startedAt=0;announcedMinute=0;updateTimer();}
  function cancelCountdown(){++countdownGeneration;clearTimeout(countdownId);if(captureState==='countdown')captureState=stream?'ready':'idle';updateCaptureUI();}
  async function startCountdown(){if(captureState!=='ready'||!stream)return;if(takeBlob&&!await confirmAction('Replace this take?','Your current recording will be removed from this tab. Download it first if you want to keep it.','Replace take'))return;
-  if(captureState!=='ready'||!stream)return;clearTake();clearError();captureState='countdown';resetTimer();updateCaptureUI();let number=3;setText('countdownNumber',number);announce('Recording starts in three seconds.');const generation=++countdownGeneration;
+  if(captureState!=='ready'||!stream)return;clearTake();clearError();takeTargetSeconds=practiceTarget||targetSeconds;practiceTarget=null;captureState='countdown';resetTimer();updateCaptureUI();let number=3;setText('countdownNumber',number);announce('Recording starts in three seconds.');const generation=++countdownGeneration;
   const tick=()=>{if(generation!==countdownGeneration)return;number--;if(number===0){beginRecording();return;}setText('countdownNumber',number);countdownId=setTimeout(tick,1000);};countdownId=setTimeout(tick,1000);
  }
- function clearTake(){if(takeURL)URL.revokeObjectURL(takeURL);takeBlob=null;takeURL=null;takeType='';takeDownloaded=false;$('playbackVideo').pause();$('playbackVideo').removeAttribute('src');$('playbackVideo').load();}
+ function clearTake(){if(takeURL)URL.revokeObjectURL(takeURL);takeBlob=null;takeURL=null;takeType='';takeDownloaded=false;$('playbackVideo').pause();$('playbackVideo').removeAttribute('src');$('playbackVideo').load();document.dispatchEvent?.(new CustomEvent('studio:take-cleared'));}
  function recorderOptions(){const types=selectedMedia==='audio'?['audio/webm;codecs=opus','audio/mp4','audio/ogg;codecs=opus']:['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/mp4','video/webm'];return types.filter(t=>MediaRecorder.isTypeSupported?.(t)).map(mimeType=>({mimeType})).concat([{}]);}
  function beginRecording(){if(!stream||!stream.getTracks().some(t=>t.readyState==='live')){cancelCountdown();showError('Your media device is no longer available. Please enable it again.');return;}
   try {
@@ -158,7 +161,7 @@
   if(!chunks.length){captureState='idle';showError('No recording data was captured. Try a different recording mode or browser.');updateCaptureUI();return;}
   takeBlob=new Blob(chunks,{type:mime});chunks=[];takeURL=URL.createObjectURL(takeBlob);$('playbackVideo').src=takeURL;captureState='playback';
   setText('takeSummary',`${displayTime(takeDuration)} · ${selectedMedia==='audio'?'Audio':'Video'} take ready`);
-  const difference=Math.abs(600-takeDuration);setText('takeDetail',`${displayTime(difference)} ${takeDuration>600?'over':'under'} target · ${(takeBlob.size/1024/1024).toFixed(1)} MB`);
+  const difference=Math.abs(takeTargetSeconds-takeDuration);setText('takeDetail',`${displayTime(difference)} ${takeDuration>takeTargetSeconds?'over':'under'} target · ${(takeBlob.size/1024/1024).toFixed(1)} MB`);
   updateCaptureUI();announce('Your take is ready. Download it before leaving this tab.');
  }
  async function newTake(){if(takeBlob&&!await confirmAction('Start a new take?','This removes the current recording from this tab. Download it first if you want to keep it.','Start a new take'))return;clearTake();resetTimer();captureState='idle';$('scriptView').scrollTop=0;cardIndex=0;renderCard();updateCaptureUI();await enableMedia();}
@@ -168,8 +171,8 @@
  $('recordButton').addEventListener('click',startCountdown);$('cancelCountdown').addEventListener('click',cancelCountdown);$('pauseButton').addEventListener('click',pauseRecording);$('stopButton').addEventListener('click',stopRecording);$('newTakeButton').addEventListener('click',newTake);$('downloadButton').addEventListener('click',downloadTake);
  $('cameraOffButton').addEventListener('click',()=>{releaseStream();captureState='idle';updateCaptureUI();});
  $('mirrorButton').addEventListener('click',()=>{const on=$('mirrorButton').getAttribute('aria-pressed')!=='true';$('mirrorButton').setAttribute('aria-pressed',String(on));setText('mirrorButton',on?'Mirror on':'Mirror off');$('liveVideo').classList.toggle('mirrored',on);});
- $('scriptTab').addEventListener('click',()=>showMode('script'));$('cueTab').addEventListener('click',()=>showMode('cue'));
- [$('scriptTab'),$('cueTab')].forEach(tab=>tab.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const next=e.key==='Home'?'script':e.key==='End'?'cue':mode==='script'?'cue':'script';showMode(next);$(next+'Tab').focus();}}));
+ $('scriptTab').addEventListener('click',()=>showMode('script'));$('cueTab').addEventListener('click',()=>showMode('cue'));$('learnTab').addEventListener('click',()=>showMode('learn'));
+ [$('scriptTab'),$('cueTab'),$('learnTab')].forEach(tab=>tab.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const modes=['script','cue','learn'];const next=e.key==='Home'?'script':e.key==='End'?'learn':modes[(modes.indexOf(mode)+(e.key==='ArrowRight'?1:2))%3];showMode(next);$(next+'Tab').focus();}}));
  $('editButton').addEventListener('click',editText);$('doneEditButton').addEventListener('click',finishEditing);$('textEditor').addEventListener('input',updateEdit);
  $('restoreButton').addEventListener('click',async()=>{if(await confirmAction('Restore the original text?',`This replaces your edits to ${mode==='script'?'the full script':'this cue card'} with the SpaceX demo. Other text stays unchanged.`,'Restore demo')){$('textEditor').value=mode==='script'?C.script:C.cards[cardIndex].body;updateEdit();}});
  $('exportTextButton').addEventListener('click',()=>downloadBlob(new Blob([$('textEditor').value],{type:'text/plain;charset=utf-8'}),mode==='script'?'speech-studio-script.txt':`speech-studio-cue-${cardIndex+1}.txt`));
@@ -184,6 +187,9 @@
  window.addEventListener('beforeunload',e=>{if(takeBlob||['recording','paused','countdown','stopping'].includes(captureState)){e.preventDefault();e.returnValue='';}});
  window.addEventListener('pagehide',()=>{++requestingGeneration;cancelCountdown();setScroll(false);if(['recording','paused'].includes(captureState))stopRecording();clearInterval(timerId);releaseStream();});
  document.addEventListener('visibilitychange',()=>{previousFrame=0;updateTimer();});
+ $('targetMinutes').addEventListener('change',()=>{if(setTarget(Number($('targetMinutes').value)*60)){save();document.dispatchEvent?.(new CustomEvent('studio:target'));}else{$('targetMinutes').value=targetSeconds/60;toast('Choose a target from 10 seconds to 120 minutes.');}});
+ window.SpeechStudio={getScript:()=>script,getTarget:()=>targetSeconds,setTarget,getMode:()=>mode,getCapture:()=>captureState,getTake:()=>takeBlob?{blob:takeBlob,duration:takeDuration,hasAudio:selectedMedia!=='video'}:null,recordPractice:seconds=>{practiceTarget=seconds;return startCountdown();},pauseRecording,stopRecording,confirmAction,downloadBlob};
+ setTarget(targetSeconds);
  $('liveVideo').classList.add('mirrored');$('scrollSpeed').value=speed;setText('speedValue',speed);applyFont();renderScript();renderCard();updateCaptureUI();
  if(saved.script||saved.cards)setText('saveStatus','Saved in this browser');
 })();

@@ -1,8 +1,10 @@
-# Speech Studio
+# SpeechMonster
 
-A calm rehearsal workspace for your next presentation. Keep your slides, words and camera together, then record a take and review your delivery.
+A friendly, local practice space for your next big idea. Begin with one section, pause when you need to, and finish with a self-check and one next drill. Open the full Studio for your slides, script and recording.
 
-**[Open Speech Studio](https://markospollo.github.io/speech-studio/)** · [Quickstart](#quickstart) · [Privacy](docs/PRIVACY.md) · [Browser support](docs/ACCESSIBILITY.md)
+SpeechMonster is the working visible brand in this draft. Existing URLs and browser progress remain compatible. The linked public release keeps its current interface until this draft is explicitly merged and published. See the [design rationale](docs/DESIGN.md).
+
+**[Open the current public release](https://markospollo.github.io/speech-studio/)** · [Quickstart](#quickstart) · [Privacy](docs/PRIVACY.md) · [Browser support](docs/ACCESSIBILITY.md)
 
 No account, installation or API key is required. The included SpaceX case study is an independent educational demo, with original diagrams and [verified sources](docs/DEMO-SOURCES.md). Speech Studio is not affiliated with or endorsed by SpaceX or NASA.
 
@@ -13,17 +15,19 @@ No account, installation or API key is required. The included SpaceX case study 
 - Switch between a balanced workspace, slides focus, and camera plus script.
 - Rehearse with a camera and microphone, camera only, or microphone only.
 - Record after a three-second countdown, pause and resume, review, and download your take.
-- Follow a ten-minute timer with closing reminders and overtime; it never cuts you off.
+- Set your own target duration, with closing reminders and overtime; it never cuts you off.
+- Use [Learn mode](docs/LEARN.md) for whole-talk, section and weak-spot practice without a microphone, editable plans, fewer prompts and self-checks.
+- Optionally install a pinned same-origin English transcription model for local post-take analysis.
 
 Slides are a reference. Downloads contain the camera and/or microphone recording, not a screen recording of slides or script.
 
 ## Quickstart
 
-1. Open the app in a current browser. The demo script and six-page demo PDF load automatically.
-2. Choose **Load slides** for your own deck. Export PowerPoint or Keynote to PDF first.
-3. Edit the script or cue cards. They save in this browser; use **Download text** to keep a copy.
-4. Choose a recording mode and enable the camera or microphone. Permission is requested only when you choose to enable it.
-5. Press **Record take**, rehearse, then **Stop**. Review and **Download take** before closing or refreshing the tab.
+1. Choose **Let’s practice a little** for a section of the labeled educational sample. No microphone is needed.
+2. Pick your section and, if you want, change the amount of help. Start, pause or finish at your pace.
+3. Make a self-check and choose one next drill, or finish for now. Explicitly save/export to keep Learn progress.
+4. Use **Use my script** to edit your words, then explicitly rebuild and review the practice plan. Plan changes preserve earlier results with their original versions.
+5. Open **Recording & slides** or **Full studio** to load a PDF or images, enable a chosen media device, rehearse and download a take. Media permission is requested only when you choose to enable it.
 
 You can rehearse the text and slides without granting media permission.
 
@@ -44,7 +48,7 @@ node scripts/audit.mjs
 
 ## Privacy and data flow
 
-The browser downloads the app, the bundled PDF renderer and the demo. Your selected slides and recordings stay in the tab. Script edits and reader settings use local storage. There is no app backend, analytics, transcription, scoring, cloud upload or remote font service. Hosting providers receive ordinary web requests; see [the full privacy notes](docs/PRIVACY.md).
+The browser downloads the app, the bundled PDF renderer and the demo. Your selected slides and recordings stay in the tab. Script edits and reader settings use local storage. There is no app backend, analytics, scoring, cloud upload or remote font service. Optional post-take transcription runs locally after an explicit model download; Learn progress is saved only when you choose Save. Hosting providers receive ordinary web requests; see [the full privacy notes](docs/PRIVACY.md).
 
 ## Project notes
 
@@ -59,3 +63,5 @@ The browser downloads the app, the bundled PDF renderer and the demo. Your selec
 ## Rights
 
 The original application code and demo content are available under the [MIT License](LICENSE). Third-party components retain their own licenses, as listed in [Third-party notices](THIRD_PARTY_NOTICES.md). SpaceX and NASA names remain their respective owners’ trademarks.
+
+Optional transcription setup: `node scripts/setup-local-stt.mjs`. This downloads pinned public assets into ignored `web/local-stt/` and preserves all licenses. No build is needed. See [Learn and local STT](docs/LEARN.md), [AI research only](docs/AI-DESIGN.md) and [verification](docs/VERIFICATION.md).

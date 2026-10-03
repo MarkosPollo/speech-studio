@@ -1,0 +1,38 @@
+{
+  "web/assets/monsters/guide-wave.webp": {
+    "bytes": 901196,
+    "sha256": "a72325f6f48bb7a2d5ad2b2ab12ac66c9925a644f6ace3c015a4825145ed08e3",
+    "width": 1254,
+    "height": 1254
+  },
+  "web/assets/monsters/guide-listen.webp": {
+    "bytes": 731430,
+    "sha256": "768889228233006234b58ea6fd04be53d4c6b4adbcbe39b6127f41593a9f68dc",
+    "width": 1254,
+    "height": 1254
+  },
+  "web/assets/monsters/guide-finish.webp": {
+    "bytes": 846806,
+    "sha256": "4c6a91306e4c9dc218e8ca0a8761c2accb262f16159eb3996b7100ccb3376c7b",
+    "width": 1254,
+    "height": 1254
+  },
+  "web/assets/monsters/prepare-pal.webp": {
+    "bytes": 739466,
+    "sha256": "72bf96ab1e9657f89333264a0ef27902d2be3789b42b043aad8bc67a63b62225",
+    "width": 1254,
+    "height": 1254
+  },
+  "web/assets/monsters/practice-pal.webp": {
+    "bytes": 749168,
+    "sha256": "37427c25a149693aae780cb32ab9d551762b501ca5933fa3e93022637732584b",
+    "width": 1254,
+    "height": 1254
+  },
+  "web/assets/monsters/listen-pal.webp": {
+    "bytes": 813894,
+    "sha256": "02f9ab3b0517ae06e569f7badc780153b760bd4f16208c3c5f7b783c1a53da28",
+    "width": 1254,
+    "height": 1254
+  }
+}

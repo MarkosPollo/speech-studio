@@ -1,0 +1,201 @@
+/* Learn uses the existing text panel and never changes slide/capture layout. */
+.target-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  margin-top: 12px;
+  color: var(--muted);
+}
+.target-control input {
+  width: 70px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.learn-view {
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+  padding: 22px;
+}
+.learn-view h3 {
+  font-size: 23px;
+  line-height: 1.2;
+  margin: 8px 0 12px;
+}
+.learn-view p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.learn-intro .eyebrow {
+  color: var(--teal);
+}
+#planStatus {
+  padding: 8px 12px;
+  background: #edf3ec;
+  border-radius: 8px;
+}
+.learn-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+.learn-view label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--ink);
+}
+.learn-view select,
+.learn-view input:not([type="checkbox"]),
+.learn-view textarea {
+  font: 14px/1.5 system-ui;
+  width: 100%;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #fff;
+  color: var(--ink);
+  min-width: 0;
+}
+.learn-view textarea {
+  min-height: 85px;
+  resize: vertical;
+}
+.learn-view .check-label {
+  flex-direction: row;
+  align-items: flex-start;
+}
+.check-label input {
+  margin: 3px 0 0;
+  flex-shrink: 0;
+}
+.learn-note {
+  color: var(--muted);
+  font-size: 13px;
+}
+.learn-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
+}
+.learn-actions .button {
+  font-size: 13px;
+  padding: 9px 12px;
+}
+.practice-clock {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+}
+.practice-clock strong {
+  font-size: 32px;
+}
+.practice-clock span {
+  font-size: 13px;
+  color: var(--muted);
+}
+.practice-prompt {
+  padding: 18px;
+  background: #f3f5ef;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  white-space: pre-wrap;
+  font:
+    18px/1.65 Georgia,
+    serif;
+  max-height: 340px;
+  overflow: auto;
+}
+.learn-view details {
+  border-top: 1px solid var(--line);
+  padding: 17px 0;
+}
+.learn-view summary {
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 650;
+}
+.plan-section {
+  margin: 16px 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  display: grid;
+  gap: 12px;
+}
+.self-review {
+  border-top: 1px solid var(--line);
+  margin: 20px 0;
+  padding-top: 16px;
+}
+.self-check {
+  display: grid;
+  gap: 7px;
+  margin: 14px 0;
+  padding: 12px;
+  background: #f3f5ef;
+  border-radius: 8px;
+}
+.self-check p {
+  margin: 0;
+}
+#nextDrill {
+  font-weight: 600;
+  color: var(--teal);
+}
+#practiceHistory {
+  padding-left: 22px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+#planError {
+  color: #a13a2e;
+}
+.learn-transcription pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: 14px/1.65 system-ui;
+}
+.learn-view progress {
+  width: 100%;
+}
+.learn-view [role="alert"]:empty {
+  display: none;
+}
+.script-panel:has(#learnView:not([hidden])) .document-meta,
+.script-panel:has(#learnView:not([hidden])) .script-footer {
+  display: none;
+}
+.script-panel:has(#learnView:not([hidden])) {
+  min-height: 540px;
+}
+.learn-view .ending-label {
+  flex-direction: row;
+}
+.mode-tabs {
+  flex-wrap: wrap;
+}
+.panel-heading:has(#learnTab) {
+  gap: 5px;
+}
+@media (max-width: 760px) {
+  .script-panel:has(#learnView:not([hidden])),
+  .has-slides .script-panel:has(#learnView:not([hidden])) {
+    height: 850px;
+    max-height: none;
+  }
+  .learn-view {
+    padding: 20px;
+  }
+  .target-control {
+    flex-wrap: wrap;
+  }
+}

@@ -1,80 +1,965 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Speech Studio</title>
-<meta name="description" content="Rehearse with slides, a teleprompter, cue cards and local recording. No account required.">
-<meta name="theme-color" content="#152c4b">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23113f3b'/%3E%3Cpath d='M8 9h7v14H8zm10 0h6v3h-6zm0 5h6v3h-6zm0 5h4v3h-4z' fill='%23f1cc7a'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css">
-<script type="module" src="slides.js"></script><script src="content.js" defer></script><script src="app.js" defer></script>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
-<meta name="referrer" content="no-referrer">
-</head>
-<body>
-<div class="app">
-<header class="app-header">
- <div class="brand"><span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i></span><div><h1>Speech Studio</h1><p>Your next talk starts here</p></div></div>
- <div class="header-actions"><span class="privacy-pill"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="5" y="8" width="10" height="9" rx="2"/><path d="M7 8V6a3 3 0 0 1 6 0v2"/></svg>Recordings stay on this device</span><button id="helpButton" class="button subtle" aria-haspopup="dialog">Quick guide</button></div>
-</header>
-<div class="slides-toolbar" aria-label="Slide loading and workspace layout">
- <div class="slide-load-group"><button id="demoSlides" class="button secondary">SpaceX demo slides</button><button id="loadSlides" class="button teal">Load slides</button><input id="slideFiles" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,application/pdf,image/png,image/jpeg,image/webp" multiple hidden><span id="slideFileName">PDF or slide images · stays in this tab</span></div>
- <div class="layout-control"><label for="workspaceLayout">Layout</label><select id="workspaceLayout" disabled><option value="balanced">Side by side</option><option value="slides-focus">Slides focus</option><option value="camera-script">Camera + script</option></select><button id="unloadSlides" class="button subtle" hidden>Remove slides</button></div>
-</div>
-<p id="slideError" class="slide-error" role="alert" hidden></p>
-<main class="studio" aria-label="Speech rehearsal workspace">
- <section class="camera-panel panel" aria-label="Camera and recording">
-  <div class="panel-heading dark-heading"><div class="label-group"><span id="liveDot" class="status-dot"></span><h2 id="cameraHeading">Your rehearsal</h2><span id="mediaBadge" class="media-badge" hidden></span></div><button id="mirrorButton" class="button dark-quiet" aria-pressed="true" title="Mirror your live preview only">Mirror on</button></div>
-  <div class="camera-stage" id="cameraStage">
-   <video id="liveVideo" autoplay playsinline muted hidden></video>
-   <video id="playbackVideo" controls playsinline preload="metadata" hidden></video>
-   <div class="empty-state" id="cameraEmpty">
-    <div class="camera-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="6" y="13" width="25" height="23" rx="5"/><path d="m31 21 11-6v20l-11-6z"/><circle cx="18.5" cy="24.5" r="5"/></svg></div>
-    <h3>Find your rhythm</h3><p>See yourself alongside your words.<br>Take a breath, then make it your own.</p>
-    <label class="sr-only" for="mediaMode">Recording mode</label><select id="mediaMode"><option value="av">Camera + microphone</option><option value="video">Camera only · no sound</option><option value="audio">Microphone only · no video</option></select>
-    <button id="enableButton" class="button light-primary">Enable camera &amp; mic</button>
-    <p class="permission-note">Your browser will ask for permission.<br>Nothing is recorded until you press Record.</p>
-   </div>
-   <div id="audioStage" class="audio-stage" hidden><span class="audio-symbol" aria-hidden="true">♫</span><h3>Microphone ready</h3><p>Your script is right beside you.</p></div>
-   <div id="countdownOverlay" class="countdown-overlay" hidden><span id="countdownNumber">3</span><p>Eyes up. Take a breath.</p><button id="cancelCountdown" class="button dark-quiet">Cancel</button></div>
-   <div id="recordingBadge" class="recording-badge" hidden><span></span><span id="recordingText">Recording</span></div>
-   <div id="eyeHint" class="eye-hint" hidden>Look toward your camera between thoughts</div>
-   <button id="cameraOffButton" class="button camera-off" hidden>Turn camera &amp; mic off</button>
-  </div>
-  <div id="mediaError" class="media-error" role="status" hidden></div>
-  <div class="recording-controls">
-   <div class="timer-row"><div><span class="eyebrow">REHEARSAL TIME</span><div class="timer"><span id="elapsedTime">00:00</span><span class="timer-target">/ 10:00</span></div></div><div id="timerMessage" class="timer-message">Room for pauses.<br>Room to be yourself.</div></div>
-   <div class="time-track" role="progressbar" aria-label="Ten-minute rehearsal progress" aria-valuemin="0" aria-valuemax="600" aria-valuenow="0" id="timeTrack"><div id="timeFill"></div><i style="left:35%" title="3:30"></i><i style="left:75%" title="7:30"></i><i style="left:90%" title="9:00"></i></div>
-   <div class="transport"><button id="recordButton" class="button record-button" disabled><span class="record-circle" aria-hidden="true"></span>Record take</button><button id="pauseButton" class="button secondary" disabled>Pause</button><button id="stopButton" class="button secondary" disabled><span class="stop-square" aria-hidden="true"></span>Stop</button><button id="newTakeButton" class="button secondary" hidden>New take</button></div>
-   <div id="takeResult" class="take-result" hidden><div><strong id="takeSummary">Your take is ready</strong><p id="takeDetail"></p></div><button id="downloadButton" class="button teal">Download take</button><p class="save-warning">This take is held only in this tab. Download it before leaving.</p></div>
-   <p class="transport-note" id="transportNote">3-second countdown · Camera view is mirrored; the saved video isn’t</p>
-  </div>
- </section>
- <section id="slidesPanel" class="slides-panel panel" aria-label="Presentation slides" hidden>
-  <div class="panel-heading"><h2>Slides</h2><span id="slideCount" class="slide-count" aria-live="polite">No slides loaded</span></div>
-  <div id="slideStage" class="slide-stage" tabindex="0" aria-label="Slide viewer. Use left and right arrow keys to navigate.">
-   <div id="slideLoading" class="slide-loading" role="status" hidden>Opening your slides…</div>
-   <canvas id="slideCanvas" hidden role="img" aria-label="Presentation slide"></canvas><img id="slideImage" hidden alt="Presentation slide">
-   <p id="slideRenderError" class="slide-render-error" role="status" hidden></p>
-  </div>
-  <div class="slide-navigation"><button id="prevSlide" class="button secondary" disabled aria-label="Previous slide">Previous</button><label class="slide-jump">Slide <input id="slideJump" type="number" min="1" value="1" aria-label="Go to slide" disabled><span id="slideTotal">of 0</span></label><button id="nextSlide" class="button teal" disabled aria-label="Next slide">Next</button></div>
-  <div class="slides-footnote"><span>← → slides · Shift + ← → cue cards</span><span>Slides are a rehearsal reference; the recording captures your camera/mic only.</span></div>
- </section>
- <section class="script-panel panel" aria-label="Script and cue cards">
-  <div class="panel-heading"><div class="mode-tabs" role="tablist" aria-label="Rehearsal text view"><button class="mode-tab active" id="scriptTab" role="tab" aria-selected="true" aria-controls="scriptView">Full script</button><button class="mode-tab" id="cueTab" role="tab" aria-selected="false" aria-controls="cueView" tabindex="-1">Cue cards</button></div><button id="editButton" class="button subtle">Edit script</button></div>
-  <div class="document-meta"><span id="documentMeta">SPACE EXPLORATION · PRACTICE DEMO</span><span id="saveStatus">SpaceX demo loaded</span></div>
-  <div id="scriptView" class="script-scroll" role="tabpanel" aria-labelledby="scriptTab" tabindex="0"><div id="scriptText" class="script-text"></div><p class="demo-disclaimer">Independent educational demo. No SpaceX or NASA affiliation.</p><p class="end-note">End of speech. You’ve got this.</p></div>
-  <div id="cueView" class="cue-view" role="tabpanel" aria-labelledby="cueTab" hidden><div class="cue-top"><span id="cueNumber">CARD 1 OF 6</span><span id="cueTime">0:00</span></div><h3 id="cueTitle"></h3><div id="cueBody" class="cue-body"></div><div class="cue-nav"><button id="prevCard" class="button secondary">Previous</button><div id="cueDots" class="cue-dots" aria-label="Choose cue card"></div><button id="nextCard" class="button teal">Next card</button></div></div>
-  <div id="editorView" class="editor-view" hidden><label id="editorLabel" for="textEditor">Edit your script</label><p>Changes save in this browser. Script and cue cards are edited separately.</p><textarea id="textEditor" spellcheck="true"></textarea><div class="editor-actions"><button id="restoreButton" class="button subtle">Restore demo</button><button id="exportTextButton" class="button subtle">Download text</button><button id="doneEditButton" class="button teal">Done editing</button></div></div>
-  <div class="reader-controls" id="readerControls"><div class="scroll-controls"><button id="scrollButton" class="button teal" aria-pressed="false">Start scroll</button><button id="rewindButton" class="button subtle" title="Return script to the beginning">Top</button><label for="scrollSpeed">Speed <output id="speedValue">24</output></label><input id="scrollSpeed" type="range" min="8" max="80" value="24" aria-label="Autoscroll speed in pixels per second"></div><div class="font-controls"><span>Text</span><button id="fontDown" class="button font-button" aria-label="Decrease text size">A−</button><button id="fontUp" class="button font-button" aria-label="Increase text size">A+</button></div></div>
-  <div class="script-footer"><span id="wordCount"></span><span id="keyboardHint">Space: scroll · ← →: cue cards</span></div>
- </section>
-</main>
-<footer class="app-footer"><a href="demo/spacex-demo.pdf" download>Download demo PDF</a><span>Practice the pauses, not just the words.</span><span id="browserHint">A downloaded take is yours to keep. Nothing is uploaded.</span></footer>
-</div>
-<div class="toast" id="toast" role="status" hidden></div>
-<dialog id="helpDialog"><form method="dialog"><div class="dialog-heading"><h2>A little rehearsal, a lot of confidence</h2><button class="button subtle" aria-label="Close quick guide">Close</button></div><ol><li><strong>Enable your camera and microphone.</strong> Choose the mode you need, then allow your browser’s permission prompt.</li><li><strong>Load your slides.</strong> Choose one PDF or several PNG, JPG or WebP images. Export PowerPoint or Keynote decks as PDF first. Use Previous / Next or the arrow keys; choose Slides focus for a larger slide. Slides stay in this tab and need to be loaded again after a refresh.</li><li><strong>Choose script or cue cards.</strong> Adjust the text size. Use Start scroll for a hands-free script, or move through the six cue cards.</li><li><strong>Press Record take.</strong> A three-second countdown gives you time to settle. Pause stops both recording and the timer; Stop opens your take for review.</li><li><strong>Watch, listen, download.</strong> Look for clear pauses, a relaxed pace and moments you can look up. Download before closing this tab or recording a new take.</li></ol><div class="help-details"><h3>Keyboard shortcuts</h3><p>Space starts or pauses script scrolling. Left and right arrows change slides when slides are visible, or cue cards otherwise. Shift + left/right always changes cue cards in Cue cards view. Shortcuts stay out of your way while you’re typing or using a control.</p><h3>Independent educational demo</h3><p>The script, cue cards and slides use SpaceX as a case study. Speech Studio is not affiliated with or endorsed by SpaceX or NASA. The diagrams are original and conceptual. <a href="demo/sources.html">Read the sources and slide descriptions</a>.</p><h3>Your ten-minute target</h3><p>The timer changes at 8 and 9 minutes, then shows overtime. It never cuts you off. Timing excludes pauses. The app does not listen to, transcribe or score your speech.</p><h3>Private, on your device</h3><p>Your camera and microphone are used only in this browser. Recordings and loaded slides are never uploaded. Slides are a reference while you rehearse and are not included in the saved camera/microphone recording. Recordings are not automatically saved. Script edits stay in this browser; clearing site data removes those edits.</p><h3>If camera access is blocked</h3><p>Open this site in a full browser tab using HTTPS. Check the browser’s camera and microphone settings and close other apps using your camera. You can choose camera only or microphone only and try again.</p></div></form></dialog>
-<dialog id="confirmDialog"><h2 id="confirmTitle"></h2><p id="confirmText"></p><div class="confirm-actions"><button id="confirmCancel" class="button secondary">Keep it</button><button id="confirmYes" class="button teal">Continue</button></div></dialog>
-<div class="sr-only" id="announcement" aria-live="polite"></div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SpeechMonster</title>
+    <meta
+      name="description"
+      content="A little practice for your next big idea. Gentle section practice, slides and private local recording."
+    />
+    <meta name="theme-color" content="#fff8ed" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%2211%22%20fill%3D%22%235740a3%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2222%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-weight%3D%22bold%22%20font-size%3D%2216%22%20fill%3D%22%23fff%22%3Esm%3C%2Ftext%3E%3C%2Fsvg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="learn.css" />
+    <link rel="stylesheet" href="monster.css" />
+    <script type="module" src="slides.js"></script>
+    <script src="content.js" defer></script>
+    <script src="app.js" defer></script>
+    <script type="module" src="learn.js"></script>
+    <script type="module" src="journey.js"></script>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'"
+    />
+    <meta name="referrer" content="no-referrer" />
+  </head>
+  <body data-view="home" data-phase="setup" data-tools="closed">
+    <a class="skip-link" href="#homeTitle">Skip to content</a>
+    <div class="app">
+      <header class="app-header monster-header">
+        <button id="homeNav" class="wordmark" aria-label="SpeechMonster home">
+          <span class="wordmark-mark" aria-hidden="true">s<span>m</span></span
+          >Speech<span>Monster</span>
+        </button>
+        <nav aria-label="Main">
+          <button id="practiceNav" class="button subtle">My practice</button
+          ><button id="studioNav" class="button subtle">Full studio</button
+          ><button
+            id="quietMode"
+            class="button quiet-toggle"
+            aria-pressed="false"
+          >
+            Quiet mode</button
+          ><button id="helpButton" class="button subtle" aria-haspopup="dialog">
+            Guide
+          </button>
+        </nav>
+      </header>
+      <section id="homeView" class="monster-home" aria-labelledby="homeTitle">
+        <div class="home-hero">
+          <div class="hero-copy">
+            <p class="overline">
+              <span class="tiny-star" aria-hidden="true">✦</span> A little
+              practice goes a long way
+            </p>
+            <h1 id="homeTitle" tabindex="-1">
+              Big ideas.<br />Little practices.
+            </h1>
+            <p class="hero-description">
+              Find your words, one small section at a time.<br />A friendly
+              place to try, pause, and try again.
+            </p>
+            <button id="beginSmall" class="button hero-cta">
+              Let’s practice a little <span aria-hidden="true">↗</span>
+            </button>
+            <p class="hero-footnote">
+              No microphone needed. No speech uploaded.
+            </p>
+          </div>
+          <div class="hero-art companion-art">
+            <div class="art-orbit" aria-hidden="true"></div>
+            <img
+              src="assets/monsters/guide-wave.webp"
+              alt="A friendly big-eyed practice companion waving hello"
+              width="600"
+              height="600"
+            /><span class="art-note"
+              >Your practice pal.<br />Always on your side.</span
+            >
+          </div>
+        </div>
+        <div class="today-heading">
+          <div>
+            <p class="overline">YOUR NEXT SMALL STEP</p>
+            <h2>What are we practicing today?</h2>
+          </div>
+          <p>Start small. You can change everything later.</p>
+        </div>
+        <div class="home-choices">
+          <article class="talk-card">
+            <div class="sample-label" id="homeSampleLabel">
+              SpaceX sample · educational demo
+            </div>
+            <h3 id="homeTalkTitle">A big idea, in six little pieces.</h3>
+            <p id="homeTalkMeta">Your script, your facts, your pace.</p>
+            <button id="chooseSection" class="button teal">
+              Practice one section <span aria-hidden="true">→</span></button
+            ><button id="chooseWhole" class="text-button">
+              Or try the whole talk
+            </button>
+          </article>
+          <article class="own-card">
+            <img
+              class="own-art companion-art"
+              loading="lazy"
+              decoding="async"
+              src="assets/monsters/prepare-pal.webp"
+              width="150"
+              height="150"
+              alt="A yellow monster holding a blank notebook"
+            />
+            <h3>Bring your<br />own words.</h3>
+            <p>
+              Paste a script, shape your sections, and keep the facts that
+              matter.
+            </p>
+            <button id="ownScript" class="text-button">
+              Use my script <span aria-hidden="true">↗</span>
+            </button>
+          </article>
+          <article class="gentle-card">
+            <img
+              class="companion-art"
+              loading="lazy"
+              decoding="async"
+              src="assets/monsters/listen-pal.webp"
+              width="200"
+              height="200"
+              alt="A mint monster with headphones"
+            />
+            <h3>Room for a pause.</h3>
+            <p>
+              Taking a break is part of practicing. There are no streaks to
+              keep.
+            </p>
+          </article>
+        </div>
+        <footer class="home-footer">
+          <span>Small steps. Your own pace.</span
+          ><button id="homeProgress" class="text-button">
+            Saved practice &amp; privacy →</button
+          ><span>Free local practice · original character art</span>
+        </footer>
+      </section>
+      <div id="workspace" hidden>
+        <div class="workspace-heading">
+          <div>
+            <p class="overline" id="workspaceEyebrow">
+              YOUR LITTLE PRACTICE SPACE
+            </p>
+            <h1 id="workspaceTitle" tabindex="-1">One idea at a time.</h1>
+          </div>
+          <button
+            id="openTools"
+            class="button secondary"
+            aria-expanded="false"
+            aria-controls="recordingPanel slidesPanel"
+          >
+            Recording &amp; slides <span aria-hidden="true">+</span>
+          </button>
+        </div>
+        <div
+          class="slides-toolbar"
+          aria-label="Slide loading and workspace layout"
+        >
+          <div class="slide-load-group">
+            <button id="demoSlides" class="button secondary">
+              SpaceX demo slides</button
+            ><button id="loadSlides" class="button teal">Load slides</button
+            ><input
+              id="slideFiles"
+              type="file"
+              accept=".pdf,.png,.jpg,.jpeg,.webp,application/pdf,image/png,image/jpeg,image/webp"
+              multiple
+              hidden
+            /><span id="slideFileName"
+              >PDF or slide images · stays in this tab</span
+            >
+          </div>
+          <div class="layout-control">
+            <label for="workspaceLayout">Layout</label
+            ><select id="workspaceLayout" disabled>
+              <option value="balanced">Side by side</option>
+              <option value="slides-focus">Slides focus</option>
+              <option value="camera-script">Camera + script</option></select
+            ><button id="unloadSlides" class="button subtle" hidden>
+              Remove slides
+            </button>
+          </div>
+        </div>
+        <p id="slideError" class="slide-error" role="alert" hidden></p>
+        <main class="studio" aria-label="Speech rehearsal workspace">
+          <section
+            id="recordingPanel"
+            class="camera-panel panel"
+            aria-label="Camera and recording"
+          >
+            <div class="panel-heading dark-heading">
+              <div class="label-group">
+                <span id="liveDot" class="status-dot"></span>
+                <h2 id="cameraHeading">Your rehearsal</h2>
+                <span id="mediaBadge" class="media-badge" hidden></span>
+              </div>
+              <button
+                id="mirrorButton"
+                class="button dark-quiet"
+                aria-pressed="true"
+                title="Mirror your live preview only"
+              >
+                Mirror on
+              </button>
+            </div>
+            <div class="camera-stage" id="cameraStage">
+              <video id="liveVideo" autoplay playsinline muted hidden></video>
+              <video
+                id="playbackVideo"
+                controls
+                playsinline
+                preload="metadata"
+                hidden
+              ></video>
+              <div class="empty-state" id="cameraEmpty">
+                <div class="camera-icon" aria-hidden="true">
+                  <svg viewBox="0 0 48 48">
+                    <rect x="6" y="13" width="25" height="23" rx="5" />
+                    <path d="m31 21 11-6v20l-11-6z" />
+                    <circle cx="18.5" cy="24.5" r="5" />
+                  </svg>
+                </div>
+                <h3>Find your rhythm</h3>
+                <p>
+                  See yourself alongside your words.<br />Take a breath, then
+                  make it your own.
+                </p>
+                <label class="sr-only" for="mediaMode">Recording mode</label
+                ><select id="mediaMode">
+                  <option value="av">Camera + microphone</option>
+                  <option value="video">Camera only · no sound</option>
+                  <option value="audio">Microphone only · no video</option>
+                </select>
+                <button id="enableButton" class="button light-primary">
+                  Enable camera &amp; mic
+                </button>
+                <p class="permission-note">
+                  Your browser will ask for permission.<br />Nothing is recorded
+                  until you press Record.
+                </p>
+              </div>
+              <div id="audioStage" class="audio-stage" hidden>
+                <span class="audio-symbol" aria-hidden="true">♫</span>
+                <h3>Microphone ready</h3>
+                <p>Your script is right beside you.</p>
+              </div>
+              <div id="countdownOverlay" class="countdown-overlay" hidden>
+                <span id="countdownNumber">3</span>
+                <p>Eyes up. Take a breath.</p>
+                <button id="cancelCountdown" class="button dark-quiet">
+                  Cancel
+                </button>
+              </div>
+              <div id="recordingBadge" class="recording-badge" hidden>
+                <span></span><span id="recordingText">Recording</span>
+              </div>
+              <div id="eyeHint" class="eye-hint" hidden>
+                Look toward your camera between thoughts
+              </div>
+              <button id="cameraOffButton" class="button camera-off" hidden>
+                Turn camera &amp; mic off
+              </button>
+            </div>
+            <div id="mediaError" class="media-error" role="status" hidden></div>
+            <div class="recording-controls">
+              <div class="timer-row">
+                <div>
+                  <span class="eyebrow">REHEARSAL TIME</span>
+                  <div class="timer">
+                    <span id="elapsedTime">00:00</span
+                    ><span class="timer-target" id="timerTarget">/ 10:00</span>
+                  </div>
+                </div>
+                <div id="timerMessage" class="timer-message">
+                  Room for pauses.<br />Room to be yourself.
+                </div>
+              </div>
+              <label class="target-control"
+                >Target minutes
+                <input
+                  id="targetMinutes"
+                  type="number"
+                  min="0.1667"
+                  max="120"
+                  step="0.1"
+                  value="10"
+              /></label>
+              <div
+                class="time-track"
+                role="progressbar"
+                aria-label="Rehearsal progress"
+                aria-valuemin="0"
+                aria-valuemax="600"
+                aria-valuenow="0"
+                id="timeTrack"
+              >
+                <div id="timeFill"></div>
+              </div>
+              <div class="transport">
+                <button id="recordButton" class="button record-button" disabled>
+                  <span class="record-circle" aria-hidden="true"></span>Record
+                  take</button
+                ><button id="pauseButton" class="button secondary" disabled>
+                  Pause</button
+                ><button id="stopButton" class="button secondary" disabled>
+                  <span class="stop-square" aria-hidden="true"></span
+                  >Stop</button
+                ><button id="newTakeButton" class="button secondary" hidden>
+                  New take
+                </button>
+              </div>
+              <div id="takeResult" class="take-result" hidden>
+                <div>
+                  <strong id="takeSummary">Your take is ready</strong>
+                  <p id="takeDetail"></p>
+                </div>
+                <button id="downloadButton" class="button teal">
+                  Download take
+                </button>
+                <p class="save-warning">
+                  This take is held only in this tab. Download it before
+                  leaving.
+                </p>
+              </div>
+              <p class="transport-note" id="transportNote">
+                3-second countdown · Camera view is mirrored; the saved video
+                isn’t
+              </p>
+            </div>
+          </section>
+          <section
+            id="slidesPanel"
+            class="slides-panel panel"
+            aria-label="Presentation slides"
+            hidden
+          >
+            <div class="panel-heading">
+              <h2>Slides</h2>
+              <span id="slideCount" class="slide-count" aria-live="polite"
+                >No slides loaded</span
+              >
+            </div>
+            <div
+              id="slideStage"
+              class="slide-stage"
+              tabindex="0"
+              aria-label="Slide viewer. Use left and right arrow keys to navigate."
+            >
+              <div id="slideLoading" class="slide-loading" role="status" hidden>
+                Opening your slides…
+              </div>
+              <canvas
+                id="slideCanvas"
+                hidden
+                role="img"
+                aria-label="Presentation slide"
+              ></canvas
+              ><img id="slideImage" hidden alt="Presentation slide" />
+              <p
+                id="slideRenderError"
+                class="slide-render-error"
+                role="status"
+                hidden
+              ></p>
+            </div>
+            <div class="slide-navigation">
+              <button
+                id="prevSlide"
+                class="button secondary"
+                disabled
+                aria-label="Previous slide"
+              >
+                Previous</button
+              ><label class="slide-jump"
+                >Slide
+                <input
+                  id="slideJump"
+                  type="number"
+                  min="1"
+                  value="1"
+                  aria-label="Go to slide"
+                  disabled
+                /><span id="slideTotal">of 0</span></label
+              ><button
+                id="nextSlide"
+                class="button teal"
+                disabled
+                aria-label="Next slide"
+              >
+                Next
+              </button>
+            </div>
+            <div class="slides-footnote">
+              <span>← → slides · Shift + ← → cue cards</span
+              ><span
+                >Slides are a rehearsal reference; the recording captures your
+                camera/mic only.</span
+              >
+            </div>
+          </section>
+          <section class="script-panel panel" aria-label="Script and cue cards">
+            <div class="panel-heading">
+              <div
+                class="mode-tabs"
+                role="tablist"
+                aria-label="Rehearsal text view"
+              >
+                <button
+                  class="mode-tab active"
+                  id="scriptTab"
+                  role="tab"
+                  aria-selected="true"
+                  aria-controls="scriptView"
+                >
+                  Full script</button
+                ><button
+                  class="mode-tab"
+                  id="cueTab"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="cueView"
+                  tabindex="-1"
+                >
+                  Cue cards</button
+                ><button
+                  class="mode-tab"
+                  id="learnTab"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="learnView"
+                  tabindex="-1"
+                >
+                  Learn
+                </button>
+              </div>
+              <button id="editButton" class="button subtle">Edit script</button>
+            </div>
+            <div class="document-meta">
+              <span id="documentMeta">SPACE EXPLORATION · PRACTICE DEMO</span
+              ><span id="saveStatus">SpaceX demo loaded</span>
+            </div>
+            <div
+              id="scriptView"
+              class="script-scroll"
+              role="tabpanel"
+              aria-labelledby="scriptTab"
+              tabindex="0"
+            >
+              <div id="scriptText" class="script-text"></div>
+              <p class="demo-disclaimer">
+                Independent educational demo. No SpaceX or NASA affiliation.
+              </p>
+              <p class="end-note">End of speech. You’ve got this.</p>
+            </div>
+            <div
+              id="cueView"
+              class="cue-view"
+              role="tabpanel"
+              aria-labelledby="cueTab"
+              hidden
+            >
+              <div class="cue-top">
+                <span id="cueNumber">CARD 1 OF 6</span
+                ><span id="cueTime">0:00</span>
+              </div>
+              <h3 id="cueTitle"></h3>
+              <div id="cueBody" class="cue-body"></div>
+              <div class="cue-nav">
+                <button id="prevCard" class="button secondary">Previous</button>
+                <div
+                  id="cueDots"
+                  class="cue-dots"
+                  aria-label="Choose cue card"
+                ></div>
+                <button id="nextCard" class="button teal">Next card</button>
+              </div>
+            </div>
+
+            <div
+              id="learnView"
+              class="learn-view"
+              role="tabpanel"
+              aria-labelledby="learnTab"
+              hidden
+            >
+              <div class="journey-breadcrumb" aria-label="Practice steps">
+                <span id="stepChoose">1 · Choose</span
+                ><span aria-hidden="true">—</span
+                ><span id="stepPractice">2 · Practice</span
+                ><span aria-hidden="true">—</span
+                ><span id="stepReflect">3 · Reflect</span>
+              </div>
+              <div class="learn-intro">
+                <span class="sample-label" id="learnSampleLabel"
+                  >SpaceX sample · educational demo</span
+                >
+                <p id="planStatus" role="status"></p>
+              </div>
+              <div id="learnSetup">
+                <div class="setup-welcome">
+                  <div>
+                    <p class="overline">A MANAGEABLE BEGINNING</p>
+                    <h2>Just one little section?</h2>
+                    <p>
+                      Pick an idea. Keep your words nearby.<br />You can use
+                      less help when you’re ready.
+                    </p>
+                  </div>
+                  <img
+                    class="companion-art"
+                    src="assets/monsters/guide-wave.webp"
+                    alt=""
+                    width="200"
+                    height="200"
+                  />
+                </div>
+                <div class="learn-options">
+                  <label
+                    >What would you like to practice?<select id="practiceScope">
+                      <option value="section">One section</option>
+                      <option value="whole">The whole talk</option>
+                      <option value="weak">A section from my self-check</option>
+                    </select></label
+                  ><label id="sectionChoice"
+                    >Your section<select id="practiceSection"></select
+                  ></label>
+                </div>
+                <details class="prompt-options">
+                  <summary>How much help would you like?</summary>
+                  <label
+                    >Prompts<select id="promptLevel">
+                      <option value="0">
+                        Full script · keep my words nearby
+                      </option>
+                      <option value="1">Idea cues · just the key points</option>
+                      <option value="2">
+                        Slide / title · a little reminder
+                      </option>
+                      <option value="3">No prompts · try from memory</option>
+                    </select></label
+                  >
+                  <p class="learn-note">
+                    Reveal Help during practice whenever you need it. We count
+                    reveals, without grading you.
+                  </p>
+                </details>
+                <div class="ready-summary">
+                  <img
+                    class="ready-pal companion-art"
+                    loading="lazy"
+                    decoding="async"
+                    src="assets/monsters/practice-pal.webp"
+                    width="120"
+                    height="120"
+                    alt="A coral monster holding a microphone"
+                  />
+                  <p class="overline">YOUR PLAN FOR THIS PRACTICE</p>
+                  <h3 id="chosenSectionTitle"></h3>
+                  <p id="practiceBudget"></p>
+                  <p id="chosenSupport"></p>
+                </div>
+                <div class="learn-actions learn-start">
+                  <button id="startPractice" class="button teal">
+                    Start my little practice
+                    <span aria-hidden="true">→</span></button
+                  ><button
+                    id="recordPractice"
+                    class="button secondary"
+                    disabled
+                  >
+                    Record with plan
+                  </button>
+                </div>
+                <p class="learn-note start-note">
+                  The timer guides you. It won’t cut you off. To record, open
+                  Recording &amp; slides and enable a microphone.
+                </p>
+                <details class="route-options">
+                  <summary>Need a shorter route?</summary>
+                  <label class="check-label"
+                    ><input id="shortRoute" type="checkbox" />I approve dropping
+                    the optional examples listed below.</label
+                  >
+                  <p id="routeStatus" class="learn-note"></p>
+                </details>
+              </div>
+              <div id="practiceStage" hidden>
+                <div class="practice-topline">
+                  <span class="practice-state" id="practiceState" role="status"
+                    >Your space to practice</span
+                  ><span id="helpCount">0 Help reveals</span>
+                </div>
+                <div class="practice-clock">
+                  <strong id="practiceTime">00:00</strong
+                  ><span id="practiceTarget"></span>
+                </div>
+                <p id="pauseMessage" class="pause-message" hidden>
+                  Take your time. The timer is paused. Resume whenever you’re
+                  ready.
+                </p>
+                <div
+                  id="practicePrompt"
+                  class="practice-prompt"
+                  tabindex="0"
+                ></div>
+                <div class="learn-actions focus-transport">
+                  <button id="pausePractice" class="button secondary" disabled>
+                    Pause practice</button
+                  ><button id="finishPractice" class="button teal" disabled>
+                    Finish this practice
+                  </button>
+                </div>
+                <div class="practice-assistance">
+                  <button id="revealHelp" class="text-button" disabled>
+                    Reveal Help</button
+                  ><button id="hideHelp" class="text-button" hidden>
+                    Hide Help</button
+                  ><button id="markSection" class="text-button" disabled>
+                    Mark section complete
+                  </button>
+                </div>
+                <p id="practiceMarks" class="learn-note"></p>
+                <p id="markedProgress" class="learn-note"></p>
+              </div>
+              <section id="selfReview" class="self-review" hidden>
+                <div class="completion-heading">
+                  <div>
+                    <p class="overline">A PRACTICE, FINISHED.</p>
+                    <h2>You showed up<br />for your idea.</h2>
+                    <p>
+                      No grade. Just a moment to notice what you want to try
+                      next.
+                    </p>
+                  </div>
+                  <img
+                    class="companion-art"
+                    loading="lazy"
+                    decoding="async"
+                    src="assets/monsters/guide-finish.webp"
+                    alt="The lilac practice companion celebrating a completed practice"
+                    width="220"
+                    height="220"
+                  />
+                </div>
+                <p id="reviewSummary" class="review-facts"></p>
+                <h3>How did that section feel to recall?</h3>
+                <p class="learn-note">
+                  Your self-check is your recollection. Transcript evidence is
+                  separate. Check protected facts and the ending yourself.
+                </p>
+                <div id="selfChecks"></div>
+                <button id="saveSelfCheck" class="button teal">
+                  Choose my next little step →
+                </button>
+                <div class="next-step">
+                  <p id="nextDrill" role="status"></p>
+                  <button id="useNextDrill" class="button teal" hidden>
+                    Try this next step
+                  </button>
+                </div>
+                <div class="completion-actions">
+                  <button id="practiceAgain" class="button secondary">
+                    Choose another practice</button
+                  ><button id="doneForNow" class="text-button">
+                    Done for now →
+                  </button>
+                </div>
+                <p class="learn-note">
+                  Your practice stays in this tab. Save or export below if you’d
+                  like to keep it.
+                </p>
+              </section>
+              <div class="learn-utility">
+                <details class="learn-plan">
+                  <summary>My script, sections &amp; protected facts</summary>
+                  <p>
+                    These are your editable decisions. Each applied change
+                    creates a new plan version; earlier practices keep their
+                    original plan.
+                  </p>
+                  <button id="editReaderScript" class="button secondary">
+                    Edit reader script</button
+                  ><button id="rebuildPlan" class="button secondary">
+                    Rebuild from current script
+                  </button>
+                  <form id="planForm">
+                    <label
+                      >Whole-speech target (seconds)<input
+                        id="planTarget"
+                        type="number"
+                        min="10"
+                        max="7200"
+                        required
+                    /></label>
+                    <div id="planSections"></div>
+                    <div class="learn-actions">
+                      <button
+                        type="button"
+                        id="addSection"
+                        class="button secondary"
+                      >
+                        Add section</button
+                      ><button type="submit" class="button teal">
+                        Apply plan changes
+                      </button>
+                    </div>
+                  </form>
+                  <p id="planError" role="alert"></p>
+                </details>
+                <details class="learn-data">
+                  <summary>Saved practice &amp; privacy</summary>
+                  <p>
+                    Practice stays in this tab until you save or export. Saving
+                    keeps plan snapshots and self-checks in this browser. It
+                    never includes recordings or transcripts.
+                  </p>
+                  <div class="learn-actions">
+                    <button id="saveProgress" class="button secondary">
+                      Save progress locally</button
+                    ><button id="exportProgress" class="button secondary">
+                      Export progress</button
+                    ><button id="importProgress" class="button secondary">
+                      Import progress</button
+                    ><input
+                      id="progressFile"
+                      type="file"
+                      accept="application/json,.json"
+                      hidden
+                    /><button id="clearProgress" class="button subtle">
+                      Clear Learn progress
+                    </button>
+                  </div>
+                  <p id="progressStatus" role="status">Not saved yet</p>
+                  <ol id="practiceHistory"></ol>
+                </details>
+                <details id="transcriptionPanel" class="learn-transcription">
+                  <summary>Check the words · local transcript</summary>
+                  <img
+                    class="transcript-pal companion-art"
+                    loading="lazy"
+                    decoding="async"
+                    src="assets/monsters/guide-listen.webp"
+                    width="100"
+                    height="100"
+                    alt="The same lilac companion, quietly listening"
+                  />
+                  <p>
+                    Optional English Whisper tiny.en runs on this device.
+                    Download about 66 MB from this app’s host. No speech or text
+                    is uploaded. Manual practice stays available while you wait.
+                  </p>
+                  <div class="learn-actions">
+                    <button id="loadTranscriber" class="button secondary">
+                      Download local model</button
+                    ><button
+                      id="cancelTranscription"
+                      class="button secondary"
+                      disabled
+                    >
+                      Cancel</button
+                    ><button id="transcribeTake" class="button teal" disabled>
+                      Transcribe latest recorded take</button
+                    ><button id="clearTranscription" class="button subtle">
+                      Clear transcript &amp; model cache
+                    </button>
+                  </div>
+                  <progress
+                    id="modelProgress"
+                    max="100"
+                    value="0"
+                    aria-label="Local transcription download progress"
+                    hidden
+                  ></progress>
+                  <p id="transcriptionStatus" role="status">
+                    Optional assets must be installed by this app’s host. Manual
+                    practice works offline after the app loads.
+                  </p>
+                  <p class="learn-note">
+                    WebM, MP4 and OGG depend on browser decoding. Limit: 20
+                    minutes / 100 MB. Pauses are excluded from recorded-time
+                    timestamps. Tiny English recognition can mishear facts or
+                    invent words; check the recording. Camera-only takes have no
+                    audio to transcribe.
+                  </p>
+                  <div id="transcriptEvidence"></div>
+                  <pre id="transcriptText"></pre>
+                </details>
+              </div>
+            </div>
+            <div id="editorView" class="editor-view" hidden>
+              <label id="editorLabel" for="textEditor">Edit your script</label>
+              <p>
+                Changes save in this browser. Script and cue cards are edited
+                separately.
+              </p>
+              <textarea id="textEditor" spellcheck="true"></textarea>
+              <div class="editor-actions">
+                <button id="restoreButton" class="button subtle">
+                  Restore demo</button
+                ><button id="exportTextButton" class="button subtle">
+                  Download text</button
+                ><button id="doneEditButton" class="button teal">
+                  Done editing
+                </button>
+              </div>
+            </div>
+            <div class="reader-controls" id="readerControls">
+              <div class="scroll-controls">
+                <button
+                  id="scrollButton"
+                  class="button teal"
+                  aria-pressed="false"
+                >
+                  Start scroll</button
+                ><button
+                  id="rewindButton"
+                  class="button subtle"
+                  title="Return script to the beginning"
+                >
+                  Top</button
+                ><label for="scrollSpeed"
+                  >Speed <output id="speedValue">24</output></label
+                ><input
+                  id="scrollSpeed"
+                  type="range"
+                  min="8"
+                  max="80"
+                  value="24"
+                  aria-label="Autoscroll speed in pixels per second"
+                />
+              </div>
+              <div class="font-controls">
+                <span>Text</span
+                ><button
+                  id="fontDown"
+                  class="button font-button"
+                  aria-label="Decrease text size"
+                >
+                  A−</button
+                ><button
+                  id="fontUp"
+                  class="button font-button"
+                  aria-label="Increase text size"
+                >
+                  A+
+                </button>
+              </div>
+            </div>
+            <div class="script-footer">
+              <span id="wordCount"></span
+              ><span id="keyboardHint">Space: scroll · ← →: cue cards</span>
+            </div>
+          </section>
+        </main>
+        <footer class="app-footer">
+          <a href="demo/spacex-demo.pdf" download>Download demo PDF</a
+          ><span>Practice the pauses, not just the words.</span
+          ><span id="browserHint"
+            >A downloaded take is yours to keep. Nothing is uploaded.</span
+          >
+        </footer>
+      </div>
+      <div class="toast" id="toast" role="status" hidden></div>
+    </div>
+    <dialog id="helpDialog">
+      <form method="dialog">
+        <div class="dialog-heading">
+          <h2>A little guide to your practice</h2>
+          <button class="button subtle" aria-label="Close quick guide">
+            Close
+          </button>
+        </div>
+        <ol>
+          <li>
+            <strong>Enable your camera and microphone.</strong> Choose the mode
+            you need, then allow your browser’s permission prompt.
+          </li>
+          <li>
+            <strong>Load your slides.</strong> Choose one PDF or several PNG,
+            JPG or WebP images. Export PowerPoint or Keynote decks as PDF first.
+            Use Previous / Next or the arrow keys; choose Slides focus for a
+            larger slide. Slides stay in this tab and need to be loaded again
+            after a refresh.
+          </li>
+          <li>
+            <strong>Choose script or cue cards.</strong> Adjust the text size.
+            Use Start scroll for a hands-free script, or move through the six
+            cue cards.
+          </li>
+          <li>
+            <strong>Press Record take.</strong> A three-second countdown gives
+            you time to settle. Pause stops both recording and the timer; Stop
+            opens your take for review.
+          </li>
+          <li>
+            <strong>Watch, listen, download.</strong> Look for clear pauses, a
+            relaxed pace and moments you can look up. Download before closing
+            this tab or recording a new take.
+          </li>
+        </ol>
+        <div class="help-details">
+          <h3>Keyboard shortcuts</h3>
+          <p>
+            Space starts or pauses script scrolling. Left and right arrows
+            change slides when slides are visible, or cue cards otherwise. Shift
+            + left/right always changes cue cards in Cue cards view. Shortcuts
+            stay out of your way while you’re typing or using a control.
+          </p>
+          <h3>Independent educational demo</h3>
+          <p>
+            The script, cue cards and slides use SpaceX as a case study. Speech
+            Studio is not affiliated with or endorsed by SpaceX or NASA. The
+            diagrams are original and conceptual.
+            <a href="demo/sources.html"
+              >Read the sources and slide descriptions</a
+            >.
+          </p>
+          <h3>Your target and Learn mode</h3>
+          <p>
+            Edit Target minutes to suit your talk. Closing reminders follow that
+            target; pauses do not count. Learn offers section practice, fewer
+            prompts and self-checks without microphone permission. Optional
+            local transcription requires an explicit model download and never
+            uploads your speech.
+          </p>
+          <h3>Private, on your device</h3>
+          <p>
+            Your camera and microphone are used only in this browser. Recordings
+            and loaded slides are never uploaded. Slides are a reference while
+            you rehearse and are not included in the saved camera/microphone
+            recording. Recordings are not automatically saved. Script edits stay
+            in this browser; clearing site data removes those edits.
+          </p>
+          <h3>If camera access is blocked</h3>
+          <p>
+            Open this site in a full browser tab using HTTPS. Check the
+            browser’s camera and microphone settings and close other apps using
+            your camera. You can choose camera only or microphone only and try
+            again.
+          </p>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="confirmDialog">
+      <h2 id="confirmTitle"></h2>
+      <p id="confirmText"></p>
+      <div class="confirm-actions">
+        <button id="confirmCancel" class="button secondary">Keep it</button
+        ><button id="confirmYes" class="button teal">Continue</button>
+      </div>
+    </dialog>
+    <div class="sr-only" id="announcement" aria-live="polite"></div>
+  </body>
 </html>
