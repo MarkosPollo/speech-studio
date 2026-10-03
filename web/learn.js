@@ -92,6 +92,69 @@ function status() {
   );
   $("shortRoute").disabled = !!active || !route.dropped.length;
   renderHistory();
+  journey();
+}
+function journey() {
+  const phase = active
+    ? active.paused
+      ? "paused"
+      : "active"
+    : review
+      ? "review"
+      : "setup";
+  document.body.dataset.phase = phase;
+  document.body.dataset.capture = api.getCapture();
+  $("learnSetup").hidden = phase !== "setup";
+  $("practiceStage").hidden = !active;
+  $("pauseMessage").hidden = !active?.paused;
+  note(
+    "practiceState",
+    active?.paused ? "Taking a pause" : "Your space to practice",
+  );
+  for (const [id, step] of [
+    ["stepChoose", "setup"],
+    ["stepPractice", "active"],
+    ["stepReflect", "review"],
+  ]) {
+    if (phase === step || (step === "active" && phase === "paused"))
+      $(id).setAttribute("aria-current", "step");
+    else $(id).removeAttribute("aria-current");
+  }
+  const chosen = chosenSections();
+  note(
+    "chosenSectionTitle",
+    $("practiceScope").value === "whole"
+      ? "Your whole talk, at your pace."
+      : chosen[0].title,
+  );
+  note(
+    "chosenSupport",
+    `${LADDER[Number($("promptLevel").value)]} · ${chosen.reduce((n, s) => n + s.facts.length, 0)} protected exact facts${chosen.some((s) => s.ending) ? " · ending kept" : ""}`,
+  );
+  $("sectionChoice").hidden = $("practiceScope").value !== "section";
+  note(
+    "markedProgress",
+    active
+      ? `${new Set(active.marks.map((m) => m.sectionId)).size} of ${active.sections.length} sections manually marked. Marks describe your actions, not mastery.`
+      : "",
+  );
+  const locked =
+    !!active ||
+    ["recording", "paused", "countdown", "stopping"].includes(api.getCapture());
+  for (const id of ["scriptTab", "cueTab", "learnTab"]) $(id).disabled = locked;
+  document.dispatchEvent(
+    new CustomEvent("studio:learn", {
+      detail: {
+        phase,
+        locked,
+        recorded: active?.recorded,
+        sectionCount: plan.sections.length,
+        target: timeLabel(plan.targetSeconds),
+        version: plan.version,
+        sample: api.getScript() === window.SPEECH_CONTENT.script,
+      },
+    }),
+  );
 }
 function renderOptions() {
   const old = $("practiceSection").value;
@@ -257,6 +320,7 @@ $("pausePractice").onclick = () => {
   }
   note("pausePractice", active.paused ? "Resume practice" : "Pause practice");
   clock();
+  journey();
 };
 $("finishPractice").onclick = () => {
   if (active?.recorded) api.stopRecording();
@@ -267,6 +331,7 @@ $("revealHelp").onclick = () => {
   active.helpCount++;
   helpShown = true;
   renderPrompt();
+  journey();
 };
 $("hideHelp").onclick = () => {
   helpShown = false;
@@ -292,6 +357,7 @@ $("markSection").onclick = () => {
   );
   helpShown = false;
   renderPrompt();
+  journey();
 };
 $("saveSelfCheck").onclick = () => {
   if (!review) return;
@@ -305,6 +371,7 @@ $("saveSelfCheck").onclick = () => {
     "Self-check stored in this tab. Save or export to keep it.",
   );
   renderHistory();
+  journey();
 };
 $("useNextDrill").onclick = () => {
   if (!drill || !review) return;
@@ -318,9 +385,26 @@ $("useNextDrill").onclick = () => {
   $("practiceScope").value = "section";
   $("practiceSection").value = drill.sectionId;
   $("promptLevel").value = drill.level;
+  review = null;
+  $("selfReview").hidden = true;
   status();
   $("startPractice").focus();
 };
+$("practiceAgain").onclick = () => {
+  review = null;
+  $("selfReview").hidden = true;
+  status();
+  $("startPractice").focus();
+};
+document.addEventListener("monster:prepare", (e) => {
+  if (active) return;
+  review = null;
+  $("selfReview").hidden = true;
+  $("practiceScope").value = e.detail.scope;
+  $("promptLevel").value = "0";
+  helpShown = false;
+  status();
+});
 for (const id of [
   "practiceScope",
   "practiceSection",
@@ -416,6 +500,9 @@ function drawEditor() {
 function apply(newPlan) {
   validatePlan(newPlan);
   plan = newPlan;
+  review = null;
+  drill = null;
+  $("selfReview").hidden = true;
   $("shortRoute").checked = false;
   api.setTarget(plan.targetSeconds);
   renderOptions();
@@ -559,6 +646,7 @@ $("clearProgress").onclick = async () => {
   }
 };
 document.addEventListener("studio:script", status);
+document.addEventListener("monster:refresh", status);
 document.addEventListener("studio:target", () => {
   if (!active)
     apply({

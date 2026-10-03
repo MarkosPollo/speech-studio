@@ -38,8 +38,10 @@ page.on("request", (r) => {
 });
 try {
   await page.goto(origin);
+  await page.locator("#studioNav").click();
   await page.locator("#slideCount").filter({ hasText: "6" }).waitFor();
   await page.locator("#learnTab").click();
+  await page.locator(".prompt-options").evaluate((el) => (el.open = true));
   await page.locator("#startPractice").waitFor();
   await page.locator("#promptLevel").selectOption("3");
   await page.locator("#practiceScope").selectOption("section");
@@ -88,6 +90,7 @@ try {
   );
   assert.equal(await page.locator("#timerTarget").innerText(), "/ 05:00");
   // Reader edits make the old plan stale until explicitly reviewed or rebuilt.
+  await page.locator("#studioNav").click();
   await page.locator("#scriptTab").click();
   await page.locator("#editButton").click();
   await page
@@ -95,6 +98,7 @@ try {
     .fill("Synthetic rehearsal. Keep 42 units. Optional story. Thank you.");
   await page.locator("#doneEditButton").click();
   await page.locator("#learnTab").click();
+  await page.locator(".prompt-options").evaluate((el) => (el.open = true));
   assert.equal(await page.locator("#startPractice").isDisabled(), true);
   await page.locator("#rebuildPlan").click();
   await page.locator("#confirmYes").click();
@@ -110,6 +114,7 @@ try {
   await ending.locator("[data-key=text]").fill("Thank you.");
   await ending.locator("[data-key=ending]").check();
   await page.locator("#planForm button[type=submit]").click();
+  await page.locator(".route-options").evaluate((el) => (el.open = true));
   assert.match(
     await page.locator("#routeStatus").innerText(),
     /Optional story/,
@@ -129,6 +134,8 @@ try {
   );
   await page.locator("#finishPractice").click();
   // Existing synthetic media recording: countdown, cancel, pause/resume, download.
+  await page.locator("#practiceAgain").click();
+  await page.locator("#openTools").click();
   await page.locator("#mediaMode").selectOption("audio");
   await page.locator("#enableButton").click();
   await page.locator("#recordPractice").click();
@@ -185,6 +192,7 @@ try {
     "Learn-linked local STT passed; testing unrelated recording attribution.",
   );
   // A later recording outside Learn must never inherit a previous plan.
+  await page.locator("#studioNav").click();
   await page.locator("#scriptTab").click();
   await page.locator("#newTakeButton").click();
   await page.locator("#confirmYes").click();
@@ -198,6 +206,7 @@ try {
   await page.locator("#stopButton").click();
   await page.locator("#takeResult").waitFor();
   await page.locator("#learnTab").click();
+  await page.locator(".prompt-options").evaluate((el) => (el.open = true));
   await page.locator("#loadTranscriber").click();
   await page.waitForFunction(
     () => !document.getElementById("transcribeTake").disabled,
@@ -230,7 +239,8 @@ try {
   const mobile = await context.newPage();
   await mobile.setViewportSize({ width: 390, height: 844 });
   await mobile.goto(origin);
-  await mobile.locator("#learnTab").click();
+  await mobile.locator("#beginSmall").click();
+  await mobile.locator("#openTools").click();
   await mobile.locator("#slideCanvas").waitFor({ state: "visible" });
   assert.ok(
     await mobile.evaluate(
@@ -264,8 +274,17 @@ try {
   await page.locator("#cameraOffButton").waitFor({ state: "visible" });
   await page.locator("#cameraOffButton").click();
   // Camera-only remains usable, with transcription explicitly unavailable.
+  await page.locator("#practiceAgain").click();
   await page.locator("#mediaMode").selectOption("video");
   await page.locator("#enableButton").click();
+  // Chrome's synthetic device can report busy immediately after releasing another stream.
+  await page.waitForFunction(
+    () => !document.getElementById("enableButton").disabled,
+  );
+  if (await page.locator("#mediaError").isVisible()) {
+    await page.waitForTimeout(1200);
+    await page.locator("#enableButton").click();
+  }
   await page.waitForFunction(
     () => !document.getElementById("recordPractice").disabled,
   );
@@ -286,7 +305,8 @@ try {
   await page.locator(".learn-data").evaluate((el) => (el.open = true));
   await page.locator("#saveProgress").click();
   await page.reload();
-  await page.locator("#learnTab").click();
+  await page.locator("#beginSmall").click();
+  await page.locator(".prompt-options").evaluate((el) => (el.open = true));
   assert.match(
     await page.locator("#progressStatus").textContent(),
     /Loaded explicitly/,

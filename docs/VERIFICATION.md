@@ -48,3 +48,18 @@ node tests/browser-check.mjs
 For real speech checks, generate only the exact nonpersonal sentence below using a locally installed TTS voice, then encode it locally to WAV/WebM/MP4/OGG. Point `SYNTHETIC_MEDIA_DIR` at that temporary fixture folder and run `node tests/stt-check.mjs`; set `TEST_FULL_LENGTH=1` for the 20-minute repeated synthetic take. Never substitute private recordings for these fixtures. The browser suite optionally accepts `SYNTHETIC_WAV` for generated fake microphone audio; `CHROMIUM_EXECUTABLE` selects an installed browser and `EVIDENCE_DIR` selects a temporary screenshot folder. No fixture media or screenshots should be committed.
 
 Synthetic sentence: “This is a synthetic rehearsal. The launch uses two stages. Keep forty two units. Optional examples may be removed. Thank you.”
+
+## SpeechMonster journey redesign — October 3, 2026
+
+The same draft branch now uses SpeechMonster as a working visible brand. Existing storage keys, progress schema, runtime/model pins, recording and slide implementation remain compatible. Original generated transparent character art was materialized and visually inspected; lossless WebP conversions were checked against every original RGBA pixel, dimensions and alpha. Public asset hashes exclude Library identity and transfer metadata.
+
+- The 15 Node tests and source/vendor/history audit pass.
+- The new end-to-end browser suite passes: focused section practice, counted Help, manual marks, excluded pause time and recovery, self-check and one drill, explicit save/export/reload/clear, custom-script stale-plan blocking/rebuild, old-plan labels, protected optional shorter route, offline manual fallback, quiet mode, reduced motion and keyboard focus.
+- Desktop plus 320-, 390- and 720-pixel viewport checks show no horizontal overflow. Actual home, setup, active, paused, completed and full Studio screenshots were captured. These remain desktop viewport checks, not physical mobile tests.
+- axe-core 4.10.3 reports zero WCAG-tagged violations across 18 sampled home/setup/practice/pause/completion/Studio screens, including contrast. Three inherited Studio labels initially failed contrast and were corrected. This is automated sample coverage, not a full accessibility-conformance claim.
+- The existing synthetic capture/local-model suite passes on the new interface, including countdown cancellation, paused recording, download, actual worker/WASM recognition, a later recording outside Learn with no inherited plan, camera-only take, saved-progress reload and offline manual practice. Zero external app requests and page errors were observed. Chrome's synthetic camera initially reported busy after stream switching; an explicit retry succeeded. Physical device behavior remains untested.
+- Test harness expectations were updated for the new home navigation and disclosure panels. Initial failures from reading hidden details and a case-sensitive history label were corrected; the complete suites were rerun.
+
+The user separately authorized an owner-private synthetic preview; its hosting provenance and deployed QA are recorded outside this public repository. Public deployment remains skipped for draft PR events. No cloud AI backend, payments, analytics, private speech or personal identifiers were added.
+
+To reproduce the optional redesign suite, serve `web/`, install Playwright and axe-core only in isolated development tooling, and run `tests/redesign-check.mjs` with `TEST_ORIGIN`, `CHROMIUM_EXECUTABLE`, `EVIDENCE_DIR`, and optionally `AXE_SOURCE` pointing to the local axe bundle. The app itself has no build or install requirement.

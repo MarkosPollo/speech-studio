@@ -1,8 +1,10 @@
-# Speech Studio
+# SpeechMonster
 
-A calm rehearsal workspace for your next presentation. Keep your slides, words and camera together, then record a take and review your delivery.
+A friendly, local practice space for your next big idea. Begin with one section, pause when you need to, and finish with a self-check and one next drill. Open the full Studio for your slides, script and recording.
 
-**[Open Speech Studio](https://markospollo.github.io/speech-studio/)** · [Quickstart](#quickstart) · [Privacy](docs/PRIVACY.md) · [Browser support](docs/ACCESSIBILITY.md)
+SpeechMonster is the working visible brand in this draft. Existing URLs and browser progress remain compatible. The linked public release keeps its current interface until this draft is explicitly merged and published. See the [design rationale](docs/DESIGN.md).
+
+**[Open the current public release](https://markospollo.github.io/speech-studio/)** · [Quickstart](#quickstart) · [Privacy](docs/PRIVACY.md) · [Browser support](docs/ACCESSIBILITY.md)
 
 No account, installation or API key is required. The included SpaceX case study is an independent educational demo, with original diagrams and [verified sources](docs/DEMO-SOURCES.md). Speech Studio is not affiliated with or endorsed by SpaceX or NASA.
 
@@ -21,11 +23,11 @@ Slides are a reference. Downloads contain the camera and/or microphone recording
 
 ## Quickstart
 
-1. Open the app in a current browser. The demo script and six-page demo PDF load automatically.
-2. Choose **Load slides** for your own deck. Export PowerPoint or Keynote to PDF first.
-3. Edit the script or cue cards. They save in this browser; use **Download text** to keep a copy.
-4. Choose a recording mode and enable the camera or microphone. Permission is requested only when you choose to enable it.
-5. Press **Record take**, rehearse, then **Stop**. Review and **Download take** before closing or refreshing the tab.
+1. Choose **Let’s practice a little** for a section of the labeled educational sample. No microphone is needed.
+2. Pick your section and, if you want, change the amount of help. Start, pause or finish at your pace.
+3. Make a self-check and choose one next drill, or finish for now. Explicitly save/export to keep Learn progress.
+4. Use **Use my script** to edit your words, then explicitly rebuild and review the practice plan. Plan changes preserve earlier results with their original versions.
+5. Open **Recording & slides** or **Full studio** to load a PDF or images, enable a chosen media device, rehearse and download a take. Media permission is requested only when you choose to enable it.
 
 You can rehearse the text and slides without granting media permission.
 
