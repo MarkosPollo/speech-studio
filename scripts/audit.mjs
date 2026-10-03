@@ -16,10 +16,15 @@ function scan(bytes,label,upstream=false){
  for(const p of privatePatterns)if(p.test(text))errors.push(`${label}: private metadata pattern`);
  for(const p of patterns)if(p.test(text))errors.push(`${label}: credential pattern`);
 }
-function walk(dir){return readdirSync(dir).filter(n=>!['.git','node_modules'].includes(n)).flatMap(n=>{
- const full=path.join(dir,n),s=lstatSync(full);if(s.isSymbolicLink())throw new Error('Symlinks are not allowed');return s.isDirectory()?walk(full):[full];
+function walk(dir,optional=false){return readdirSync(dir).filter(n=>!(dir===root&&['.git','node_modules','tmp'].includes(n))).flatMap(n=>{
+ const full=path.join(dir,n),s=lstatSync(full);if(s.isSymbolicLink())throw new Error('Symlinks are not allowed');if(!optional&&full===path.join(root,'web/local-stt'))return [];return s.isDirectory()?walk(full,optional):[full];
 });}
 const files=walk(root);
+// Optional installation is verified against its public pinned manifest, never
+// scanned with source-specific identifiers or committed to history.
+const stt=JSON.parse(readFileSync(path.join(root,'web/stt-assets.json'),'utf8'));
+const optionalRoot=path.join(root,'web/local-stt');
+try{for(const full of walk(optionalRoot,true)){const rel=path.relative(optionalRoot,full).replaceAll(path.sep,'/'),asset=stt.files.find(f=>f.path===rel),bytes=readFileSync(full);if(!asset||bytes.length!==asset.bytes||asset.sha256!==createHash('sha256').update(bytes).digest('hex'))errors.push(`optional asset ${rel}: integrity mismatch`);}}catch(e){if(e.code!=='ENOENT')throw e;}
 for(const full of files){
  const rel=path.relative(root,full).replaceAll(path.sep,'/'),bytes=readFileSync(full),vendor=rel.startsWith('web/vendor/');
  if(/(?:^|\/)(?:\.env[^/]*|private[^/]*|recordings?|\.openai|\.sites-runtime)(?:\/|$)|\.(?:zip|mp4|mov|webm|m4a|pptx?|key)$/i.test(rel))errors.push(`${rel}: disallowed artifact`);
@@ -28,12 +33,14 @@ for(const full of files){
  else if(!/\.(?:md|html|css|js|mjs|json|txt|py|yml|pdf)$/.test(rel)&&!['LICENSE','.gitignore','web/_headers','web/.nojekyll'].includes(rel))errors.push(`${rel}: unexpected file`);
 }
 for(const name of Object.keys(manifest))if(!files.includes(path.join(root,name)))errors.push(`${name}: missing vendor asset`);
+const tracked=execFileSync('git',['ls-files'],{cwd:root,encoding:'utf8'}).trim().split('\n');
+for(const name of tracked)if(/^(?:web\/local-stt\/|tmp\/|node_modules\/)/.test(name))errors.push(`${name}: optional/generated artifact must not be tracked`);
 let commits=[];
 try{commits=execFileSync('git',['rev-list','--all'],{cwd:root,encoding:'utf8',stdio:['ignore','pipe','ignore']}).trim().split('\n').filter(Boolean);}catch{}
 for(const sha of commits){
  scan(execFileSync('git',['show','-s','--format=fuller',sha],{cwd:root}),`commit ${sha}`);
  const entries=execFileSync('git',['ls-tree','-r','--format=%(objectname) %(path)',sha],{cwd:root,encoding:'utf8'}).trim().split('\n');
- for(const entry of entries){const [object,...rest]=entry.split(' '),name=rest.join(' '),bytes=execFileSync('git',['cat-file','blob',object],{cwd:root,maxBuffer:15*1024*1024});scan(bytes,`history ${sha}:${name}`,name.startsWith('web/vendor/'));}
+ for(const entry of entries){const [object,...rest]=entry.split(' '),name=rest.join(' ');if(/^(?:web\/local-stt\/|tmp\/|node_modules\/)/.test(name))errors.push(`history ${sha}:${name}: generated artifact`);const bytes=execFileSync('git',['cat-file','blob',object],{cwd:root,maxBuffer:15*1024*1024});scan(bytes,`history ${sha}:${name}`,name.startsWith('web/vendor/'));}
 }
 if(errors.length){console.error([...new Set(errors)].join('\n'));process.exit(1);}
 console.log(`Audit passed: ${files.length} files, ${Object.keys(manifest).length} verified vendor assets, ${commits.length} history commits; no denied private data or credential patterns.`);

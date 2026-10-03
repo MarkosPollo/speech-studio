@@ -61,3 +61,9 @@ test('PDF bundle, local renderer and deploy configuration are complete',()=>{
  const slides=readFileSync(new URL('../web/slides.js',import.meta.url),'utf8');assert.match(slides,/isEvalSupported: false/);assert.match(slides,/100 \* 1024 \* 1024/);assert.match(slides,/new URL\('\.\/demo\/spacex-demo.pdf'/);
  assert.ok(html.includes('Content-Security-Policy'));assert.ok(html.includes('No SpaceX or NASA affiliation'));
 });
+
+test('custom recording targets and pause-excluded duration remain attached to the take',async()=>{
+ const s=setup();s.get('targetMinutes').value='1';await s.get('targetMinutes').emit('change');assert.equal(s.get('timerTarget').textContent,'/ 01:00');
+ await s.click('enableButton');await s.click('recordButton');for(let i=0;i<3;i++)await s.tick();s.advance(61000);await s.click('pauseButton');s.advance(30000);await s.click('stopButton');assert.match(s.get('takeDetail').textContent,/00:01 over target/);
+ s.get('targetMinutes').value='2';await s.get('targetMinutes').emit('change');assert.equal(s.get('timerTarget').textContent,'/ 01:00');assert.match(s.get('takeDetail').textContent,/00:01 over target/);
+});

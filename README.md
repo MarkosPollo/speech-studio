@@ -13,7 +13,9 @@ No account, installation or API key is required. The included SpaceX case study 
 - Switch between a balanced workspace, slides focus, and camera plus script.
 - Rehearse with a camera and microphone, camera only, or microphone only.
 - Record after a three-second countdown, pause and resume, review, and download your take.
-- Follow a ten-minute timer with closing reminders and overtime; it never cuts you off.
+- Set your own target duration, with closing reminders and overtime; it never cuts you off.
+- Use [Learn mode](docs/LEARN.md) for whole-talk, section and weak-spot practice without a microphone, editable plans, fewer prompts and self-checks.
+- Optionally install a pinned same-origin English transcription model for local post-take analysis.
 
 Slides are a reference. Downloads contain the camera and/or microphone recording, not a screen recording of slides or script.
 
@@ -44,7 +46,7 @@ node scripts/audit.mjs
 
 ## Privacy and data flow
 
-The browser downloads the app, the bundled PDF renderer and the demo. Your selected slides and recordings stay in the tab. Script edits and reader settings use local storage. There is no app backend, analytics, transcription, scoring, cloud upload or remote font service. Hosting providers receive ordinary web requests; see [the full privacy notes](docs/PRIVACY.md).
+The browser downloads the app, the bundled PDF renderer and the demo. Your selected slides and recordings stay in the tab. Script edits and reader settings use local storage. There is no app backend, analytics, scoring, cloud upload or remote font service. Optional post-take transcription runs locally after an explicit model download; Learn progress is saved only when you choose Save. Hosting providers receive ordinary web requests; see [the full privacy notes](docs/PRIVACY.md).
 
 ## Project notes
 
@@ -59,3 +61,5 @@ The browser downloads the app, the bundled PDF renderer and the demo. Your selec
 ## Rights
 
 The original application code and demo content are available under the [MIT License](LICENSE). Third-party components retain their own licenses, as listed in [Third-party notices](THIRD_PARTY_NOTICES.md). SpaceX and NASA names remain their respective owners’ trademarks.
+
+Optional transcription setup: `node scripts/setup-local-stt.mjs`. This downloads pinned public assets into ignored `web/local-stt/` and preserves all licenses. No build is needed. See [Learn and local STT](docs/LEARN.md), [AI research only](docs/AI-DESIGN.md) and [verification](docs/VERIFICATION.md).

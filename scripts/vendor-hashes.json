@@ -197,5 +197,7 @@
   "web/vendor/pdfjs/wasm/jbig2.wasm": "df85117444f0f0150c5c9d0dd8eeab102d705217f838a9f6d46788b6d9b3d681",
   "web/vendor/pdfjs/wasm/openjpeg.wasm": "67b8e2b162da472e98cb48d3d32e3e38fff481b9b32ff4818e78bb248af88ab2",
   "web/vendor/pdfjs/wasm/openjpeg_nowasm_fallback.js": "07c3c3361827308741bc31c561b59e705ebb4d1e8efb84e4d24884e230dbb894",
-  "web/vendor/pdfjs/wasm/qcms_bg.wasm": "6017eca5939cde1836e88e6d8cd27ae039246f206515ea4487bdfd0e3fb16e26"
+  "web/vendor/pdfjs/wasm/qcms_bg.wasm": "6017eca5939cde1836e88e6d8cd27ae039246f206515ea4487bdfd0e3fb16e26",
+  "web/vendor/text-match/LICENSE": "df967242af7f00acb74a0a3b2b9e314f2d9b65788050e30c2e25b9f2a7783e7f",
+  "web/vendor/text-match/match.js": "aecc72ded36187c1df55e973fac6054838374b257c751393236beb358465bb33"
 }

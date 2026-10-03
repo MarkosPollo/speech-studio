@@ -9,3 +9,6 @@ tmp/
 *.mov
 *.m4a
 *.zip
+
+# Optional pinned local transcription assets are provisioned, never committed.
+web/local-stt/
